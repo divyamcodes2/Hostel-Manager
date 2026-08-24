@@ -38,6 +38,7 @@ def create_app():
     with app.app_context():
         from backend.models.user import User
         from backend.models.room import Room
+        from backend.models.complaint import Complaint
 
         db.create_all()
 
