@@ -33,9 +33,11 @@ def create_app():
 
     from backend.routes.auth import auth_bp
     from backend.routes.complaints import complaints_bp
+    from backend.routes.staff import warden_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(complaints_bp)
+    app.register_blueprint(warden_bp)
 
     with app.app_context():
         from backend.models.user import User
