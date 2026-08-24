@@ -47,17 +47,17 @@ def seed_database():
         )
         student.set_password("Student@123")
 
-        staff = User(
-            name="Demo Staff",
-            email="staff@example.com",
-            role="staff",
+        warden = User(
+            name="Demo Warden",
+            email="warden@example.com",
+            role="warden",
             active=True
         )
-        staff.set_password("Staff@123")
+        warden.set_password("Warden@123")
 
         db.session.add(admin)
         db.session.add(student)
-        db.session.add(staff)
+        db.session.add(warden)
 
         db.session.commit()
 
@@ -65,7 +65,7 @@ def seed_database():
         print()
         print("Admin:   admin@example.com / Admin@123")
         print("Student: student@example.com / Student@123")
-        print("Staff:   staff@example.com / Staff@123")
+        print("Warden:  warden@example.com / Warden@123")
 
 
 if __name__ == "__main__":
