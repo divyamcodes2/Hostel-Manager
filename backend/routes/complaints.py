@@ -154,3 +154,70 @@ def get_my_complaints():
     return jsonify({
         "complaints": complaint_list
     }), 200
+
+
+@complaints_bp.route("/<string:complaint_id>", methods=["GET"])
+def get_complaint(complaint_id):
+    # Get the ID of the currently logged-in user
+    user_id = session.get("user_id")
+
+    # User is not logged in
+    if not user_id:
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    # Find the logged-in user
+    user = User.query.get(user_id)
+
+    # User doesn't exist or account is inactive
+    if not user or not user.active:
+        session.clear()
+
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    # Only students can view individual complaints
+    if user.role != "student":
+        return jsonify({
+            "error": "Only students can view complaints"
+        }), 403
+
+    # Find the complaint by its public complaint ID
+    complaint = Complaint.query.filter_by(
+        complaint_id=complaint_id
+    ).first()
+
+    # Complaint does not exist
+    if not complaint:
+        return jsonify({
+            "error": "Complaint not found"
+        }), 404
+
+    # Make sure the complaint belongs to the logged-in student
+    if complaint.user_id != user.id:
+        return jsonify({
+            "error": "You are not allowed to view this complaint"
+        }), 403
+
+    # Return the complaint details
+    return jsonify({
+        "complaint": {
+            "complaint_id": complaint.complaint_id,
+            "category": complaint.category,
+            "title": complaint.title,
+            "description": complaint.description,
+            "priority": complaint.priority,
+            "status": complaint.status,
+            "user_id": complaint.user_id,
+            "room_id": complaint.room_id,
+            "created_at": complaint.created_at.isoformat(),
+            "updated_at": complaint.updated_at.isoformat(),
+            "resolved_at": (
+                complaint.resolved_at.isoformat()
+                if complaint.resolved_at
+                else None
+            )
+        }
+    }), 200
