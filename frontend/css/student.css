@@ -359,3 +359,255 @@ body {
         min-height: 122px;
     }
 }
+
+.student-page {
+    --dashboard-ink: #17202a;
+    --dashboard-muted: #697586;
+    --dashboard-paper: #f7f8f5;
+    --dashboard-line: #dfe5e4;
+    --dashboard-teal: #087f8c;
+    background: #173b42;
+    color: var(--dashboard-ink);
+    font-family: 'DM Sans', sans-serif;
+}
+
+.student-shell {
+    width: min(100%, 1120px);
+    padding: 32px 24px;
+}
+
+.student-login {
+    width: min(100%, 420px);
+    margin: 0 auto;
+    padding: 38px 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+}
+
+.student-login h1,
+.dashboard-header h1,
+.profile-panel h2,
+.dashboard-card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.student-login .login-header h1 {
+    color: var(--dashboard-ink);
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+}
+
+.student-login .login-header p:last-child {
+    color: var(--dashboard-muted);
+}
+
+.student-login .eyebrow,
+.student-dashboard .eyebrow {
+    color: var(--dashboard-teal);
+}
+
+.student-dashboard {
+    animation: dashboard-enter 0.35s ease both;
+}
+
+.student-dashboard[hidden],
+.student-login[hidden] {
+    display: none;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 20px;
+    color: #ffffff;
+    margin-bottom: 28px;
+}
+
+.dashboard-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.05;
+}
+
+.logout-button {
+    padding: 10px 16px;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.profile-panel,
+.dashboard-card {
+    background: var(--dashboard-paper);
+    border-radius: 14px;
+    padding: 24px;
+}
+
+.profile-panel {
+    min-height: 300px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    background: var(--dashboard-teal);
+    border-radius: 50%;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 26px;
+}
+
+.profile-panel h2 {
+    font-size: 1.25rem;
+    margin-bottom: 24px;
+}
+
+.profile-details {
+    display: grid;
+    gap: 16px;
+}
+
+.profile-details div {
+    padding-top: 12px;
+    border-top: 1px solid var(--dashboard-line);
+}
+
+.profile-details dt {
+    color: var(--dashboard-muted);
+    font-size: 0.75rem;
+    margin-bottom: 4px;
+}
+
+.profile-details dd {
+    font-weight: 700;
+}
+
+.dashboard-main {
+    display: grid;
+    gap: 18px;
+}
+
+.card-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card h2 {
+    font-size: 1.25rem;
+}
+
+.card-icon {
+    color: var(--dashboard-teal);
+    font-size: 1.4rem;
+}
+
+.dashboard-card label {
+    display: block;
+    color: var(--dashboard-muted);
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
+.dashboard-card textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 13px;
+    color: var(--dashboard-ink);
+    background: #ffffff;
+    border: 1px solid var(--dashboard-line);
+    border-radius: 8px;
+    font: inherit;
+    outline: none;
+    margin-bottom: 14px;
+}
+
+.dashboard-card textarea:focus {
+    border-color: var(--dashboard-teal);
+    box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.14);
+}
+
+.dashboard-card .btn-login {
+    width: auto;
+    padding: 11px 18px;
+    background: var(--dashboard-teal);
+}
+
+.dashboard-card .btn-login:hover {
+    background: #076b76;
+}
+
+.status-card {
+    padding-bottom: 12px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 15px 0;
+    border-top: 1px solid var(--dashboard-line);
+    font-size: 0.9rem;
+}
+
+.status-badge {
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+.status-badge.pending {
+    color: #8a5a00;
+    background: #fff0bf;
+}
+
+.status-badge.resolved {
+    color: #17683f;
+    background: #d9f3e4;
+}
+
+@keyframes dashboard-enter {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+    .student-shell {
+        padding: 22px 16px;
+    }
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-panel {
+        min-height: auto;
+    }
+
+    .dashboard-header {
+        align-items: start;
+        flex-direction: column;
+    }
+}

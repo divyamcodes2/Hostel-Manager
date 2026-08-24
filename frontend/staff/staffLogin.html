@@ -1,11 +1,11 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Hostel Management - Warden Login</title>
-	<link rel="stylesheet" href="../css/style.css">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="../css/student.css">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -18,10 +18,10 @@
 
 		<form action="#" method="POST" class="login-form">
 			<div class="input-group">
-				<label for="warden-id">Warden ID</label>
+				<label for="warden-email">Email address</label>
 				<div class="input-field">
-					<i class="fa-solid fa-id-badge icon"></i>
-					<input type="text" id="warden-id" placeholder="e.g., WAR2026001" required>
+					<i class="fa-solid fa-envelope icon"></i>
+					<input type="email" id="warden-email" placeholder="warden@hostel.com" required>
 				</div>
 			</div>
 
@@ -44,7 +44,7 @@
 		</form>
 
 		<div class="login-footer">
-			<p><a href="../index.html">Back to portal selection</a></p>
+			<p><a href="../loginPage/login.html">Back to portal selection</a></p>
 		</div>
 	</div>
 </body>
