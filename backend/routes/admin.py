@@ -349,3 +349,85 @@ def assign_room(user_id):
             "room_number": room.room_number
         }
     }), 200
+
+
+@admin_bp.route("/users/<int:user_id>/status", methods=["PATCH"])
+def update_user_status(user_id):
+    # Get the ID of the currently logged-in admin
+    admin_id = session.get("user_id")
+
+    # Admin is not logged in
+    if not admin_id:
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    # Find the logged-in admin
+    admin = User.query.get(admin_id)
+
+    # Admin account doesn't exist or is inactive
+    if not admin or not admin.active:
+        session.clear()
+
+        return jsonify({
+            "error": "Not authenticated"
+        }), 401
+
+    # Only admins can change user status
+    if admin.role != "admin":
+        return jsonify({
+            "error": "Only admins can change user status"
+        }), 403
+
+    # Find the target user
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify({
+            "error": "User not found"
+        }), 404
+
+    # Do not allow admin to deactivate themselves
+    if user.id == admin.id:
+        return jsonify({
+            "error": "Admin cannot deactivate their own account"
+        }), 400
+
+    # Get JSON request body
+    data = request.get_json()
+
+    if not data:
+        return jsonify({
+            "error": "Request body is required"
+        }), 400
+
+    # Get active status
+    active = data.get("active")
+
+    # Make sure active was provided
+    if active is None:
+        return jsonify({
+            "error": "Active status is required"
+        }), 400
+
+    # Make sure active is actually boolean
+    if not isinstance(active, bool):
+        return jsonify({
+            "error": "Active must be true or false"
+        }), 400
+
+    # Update user status
+    user.active = active
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "User status updated successfully",
+        "user": {
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "role": user.role,
+            "active": user.active
+        }
+    }), 200
