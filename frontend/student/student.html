@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hostel Manager - Student Dashboard</title>
+	<link rel="stylesheet" href="../css/student.css">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="student-page">
+	<main class="student-shell">
+		<section class="student-dashboard" id="student-dashboard">
+			<header class="dashboard-header">
+				<div>
+					<p class="eyebrow">Student dashboard</p>
+					<h1>Good morning, Alex.</h1>
+				</div>
+				<a class="logout-button" href="studentlogin.html">Log out</a>
+			</header>
+
+			<div class="dashboard-layout">
+				<aside class="profile-panel">
+					<div class="avatar" aria-hidden="true">AS</div>
+					<p class="eyebrow">Your profile</p>
+					<h2>Alex Sharma</h2>
+					<dl class="profile-details">
+						<div><dt>Student name</dt><dd>Alex Sharma</dd></div>
+						<div><dt>Room number</dt><dd>B-204</dd></div>
+						<div><dt>Student ID</dt><dd>STU2026101</dd></div>
+					</dl>
+				</aside>
+
+				<div class="dashboard-main">
+					<section class="dashboard-card complaint-card">
+						<div class="card-heading">
+							<div>
+								<p class="eyebrow">Need help?</p>
+								<h2>Enter your complaint</h2>
+							</div>
+							<i class="fa-regular fa-message card-icon" aria-hidden="true"></i>
+						</div>
+						<form id="complaint-form">
+							<label for="complaint">Describe the issue</label>
+							<textarea id="complaint" rows="5" placeholder="Tell the warden what needs attention..." required></textarea>
+							<button class="btn-login" type="submit">Submit complaint</button>
+						</form>
+					</section>
+
+					<section class="dashboard-card status-card">
+						<div class="card-heading">
+							<div>
+								<p class="eyebrow">Stay informed</p>
+								<h2>Check complaint status</h2>
+							</div>
+							<i class="fa-solid fa-list-check card-icon" aria-hidden="true"></i>
+						</div>
+						<div class="status-row"><span>Water tap repair</span><strong class="status-badge pending">Pending</strong></div>
+						<div class="status-row"><span>Room light replacement</span><strong class="status-badge resolved">Resolved</strong></div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</main>
+	<script>
+		const complaintForm = document.getElementById('complaint-form');
+
+		complaintForm.addEventListener('submit', (event) => {
+			event.preventDefault();
+			alert('Your complaint has been submitted.');
+			complaintForm.reset();
+		});
+	</script>
+</body>
+</html>
