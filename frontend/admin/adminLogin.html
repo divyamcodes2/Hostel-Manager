@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Hostel Manager - Admin Login
+    </title>
+
+
+    <link rel="stylesheet" href="../css/student.css">
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+
+<body class="student-page">
+
+
+    <main class="student-shell">
+
+
+        <section class="student-login">
+
+
+            <div class="login-header">
+
+                <i class="fa-solid fa-user-shield logo-icon" aria-hidden="true"></i>
+
+
+                <p class="eyebrow">
+                    Hostel Manager
+                </p>
+
+
+                <h1>
+                    Admin Login
+                </h1>
+
+
+                <p>
+                    Sign in to manage users and rooms.
+                </p>
+
+            </div>
+
+
+            <form class="login-form" id="admin-login-form">
+
+
+                <div class="input-group">
+
+                    <label for="admin-email">
+                        Email address
+                    </label>
+
+
+                    <div class="input-field">
+
+                        <i class="fa-solid fa-envelope icon" aria-hidden="true"></i>
+
+
+                        <input type="email" id="admin-email" placeholder="admin@hostel.com" required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="admin-password">
+                        Password
+                    </label>
+
+
+                    <div class="input-field">
+
+                        <i class="fa-solid fa-lock icon" aria-hidden="true"></i>
+
+
+                        <input type="password" id="admin-password" placeholder="Enter your password" required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-options">
+
+                    <label class="remember-me">
+
+                        <input type="checkbox" id="admin-remember-me">
+
+                        Remember me
+
+                    </label>
+
+
+                    <a href="#" class="forgot-pass" onclick="return false;">
+                        Forgot password?
+                    </a>
+
+                </div>
+
+
+                <button type="submit" class="btn-login" id="admin-login-button">
+                    Login to dashboard
+                </button>
+
+
+            </form>
+
+
+            <div class="login-footer">
+
+                <a href="../loginPage/login.html">
+                    Back to portal selection
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+
+
+    <script>
+
+        const adminLoginForm =
+            document.getElementById(
+                "admin-login-form"
+            );
+
+
+        const adminLoginButton =
+            document.getElementById(
+                "admin-login-button"
+            );
+
+
+        adminLoginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                const email =
+                    document
+                        .getElementById(
+                            "admin-email"
+                        )
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "admin-password"
+                        )
+                        .value;
+
+
+                if (
+                    !email ||
+                    !password
+                ) {
+
+                    alert(
+                        "Please enter your email and password."
+                    );
+
+                    return;
+
+                }
+
+
+                adminLoginButton.disabled =
+                    true;
+
+
+                adminLoginButton.textContent =
+                    "Logging in...";
+
+
+                try {
+
+                    const data =
+                        await login(
+                            email,
+                            password
+                        );
+
+
+                    if (
+                        !data.user
+                    ) {
+
+                        throw new Error(
+                            "User information was not returned."
+                        );
+
+                    }
+
+
+                    if (
+                        data.user.role !==
+                        "admin"
+                    ) {
+
+                        throw new Error(
+                            "This account is not an admin account."
+                        );
+
+                    }
+
+
+                    window.location.href =
+                        "admin.html";
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Admin login error:",
+                        error
+                    );
+
+
+                    alert(
+                        error.message
+                    );
+
+                }
+                finally {
+
+                    adminLoginButton.disabled =
+                        false;
+
+
+                    adminLoginButton.textContent =
+                        "Login to dashboard";
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

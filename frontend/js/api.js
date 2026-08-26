@@ -1,30 +1,48 @@
-const API_BASE_URL = "http://127.0.0.1:5000/api";
+const API_BASE_URL =
+    "http://127.0.0.1:5000/api";
 
 
-async function apiRequest(endpoint, options = {}) {
+// ============================================================
+// GENERIC API REQUEST
+// ============================================================
 
-    const response = await fetch(
-        `${API_BASE_URL}${endpoint}`,
-        {
-            ...options,
+async function apiRequest(
+    endpoint,
+    options = {}
+) {
 
-            credentials: "include",
+    const response =
+        await fetch(
+            `${API_BASE_URL}${endpoint}`,
+            {
+                ...options,
 
-            headers: {
-                "Content-Type": "application/json",
-                ...(options.headers || {})
+                credentials:
+                    "include",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    ...(options.headers || {})
+
+                }
+
             }
-        }
-    );
+        );
 
 
     let data;
 
+
     try {
 
-        data = await response.json();
+        data =
+            await response.json();
 
-    } catch (error) {
+    }
+    catch (error) {
 
         throw new Error(
             "The server returned an invalid response."
@@ -48,21 +66,33 @@ async function apiRequest(endpoint, options = {}) {
 }
 
 
-// ==========================================
+// ============================================================
 // AUTH
-// ==========================================
+// ============================================================
 
-async function login(email, password) {
+async function login(
+    email,
+    password
+) {
 
     return await apiRequest(
         "/auth/login",
         {
-            method: "POST",
 
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            method:
+                "POST",
+
+            body:
+                JSON.stringify({
+
+                    email:
+                        email,
+
+                    password:
+                        password
+
+                })
+
         }
     );
 
@@ -83,16 +113,19 @@ async function logout() {
     return await apiRequest(
         "/auth/logout",
         {
-            method: "POST"
+
+            method:
+                "POST"
+
         }
     );
 
 }
 
 
-// ==========================================
+// ============================================================
 // STUDENT COMPLAINTS
-// ==========================================
+// ============================================================
 
 async function createComplaint(
     category,
@@ -103,13 +136,24 @@ async function createComplaint(
     return await apiRequest(
         "/complaints",
         {
-            method: "POST",
 
-            body: JSON.stringify({
-                category: category,
-                title: title,
-                description: description
-            })
+            method:
+                "POST",
+
+            body:
+                JSON.stringify({
+
+                    category:
+                        category,
+
+                    title:
+                        title,
+
+                    description:
+                        description
+
+                })
+
         }
     );
 
@@ -136,20 +180,281 @@ async function getComplaint(
 }
 
 
-// ==========================================
+// ============================================================
+// WARDEN COMPLAINTS
+// ============================================================
+
+async function getWardenComplaints() {
+
+    return await apiRequest(
+        "/warden/complaints"
+    );
+
+}
+
+
+async function updateWardenComplaintStatus(
+    complaintId,
+    status
+) {
+
+    return await apiRequest(
+        `/warden/complaints/${complaintId}`,
+        {
+
+            method:
+                "PATCH",
+
+            body:
+                JSON.stringify({
+
+                    status:
+                        status
+
+                })
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// ADMIN USERS
+// ============================================================
+
+async function getAdminUsers() {
+
+    return await apiRequest(
+        "/admin/users"
+    );
+
+}
+
+
+async function createAdminUser(
+    name,
+    email,
+    password,
+    role
+) {
+
+    return await apiRequest(
+        "/admin/users",
+        {
+
+            method:
+                "POST",
+
+            body:
+                JSON.stringify({
+
+                    name:
+                        name,
+
+                    email:
+                        email,
+
+                    password:
+                        password,
+
+                    role:
+                        role
+
+                })
+
+        }
+    );
+
+}
+
+
+async function updateAdminUserStatus(
+    userId,
+    active
+) {
+
+    return await apiRequest(
+        `/admin/users/${userId}/status`,
+        {
+
+            method:
+                "PATCH",
+
+            body:
+                JSON.stringify({
+
+                    active:
+                        active
+
+                })
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// ADMIN ROOMS
+// ============================================================
+
+async function getAdminRooms() {
+
+    return await apiRequest(
+        "/admin/rooms"
+    );
+
+}
+
+
+async function createAdminRoom(
+    hostelBlock,
+    roomNumber,
+    capacity
+) {
+
+    return await apiRequest(
+        "/admin/rooms",
+        {
+
+            method:
+                "POST",
+
+            body:
+                JSON.stringify({
+
+                    hostel_block:
+                        hostelBlock,
+
+                    room_number:
+                        roomNumber,
+
+                    capacity:
+                        Number(capacity)
+
+                })
+
+        }
+    );
+
+}
+
+
+async function assignStudentToRoom(
+    userId,
+    roomId
+) {
+
+    return await apiRequest(
+        `/admin/users/${userId}/room`,
+        {
+
+            method:
+                "PATCH",
+
+            body:
+                JSON.stringify({
+
+                    room_id:
+                        Number(roomId)
+
+                })
+
+        }
+    );
+
+}
+
+
+async function removeStudentFromRoom(
+    userId
+) {
+
+    return await apiRequest(
+        `/admin/users/${userId}/room`,
+        {
+
+            method:
+                "PATCH",
+
+            body:
+                JSON.stringify({
+
+                    room_id:
+                        null
+
+                })
+
+        }
+    );
+
+}
+
+
+// ============================================================
 // EXPOSE FUNCTIONS GLOBALLY
-// ==========================================
+// ============================================================
 
-window.apiRequest = apiRequest;
+window.apiRequest =
+    apiRequest;
 
-window.login = login;
 
-window.getCurrentUser = getCurrentUser;
+window.login =
+    login;
 
-window.logout = logout;
 
-window.createComplaint = createComplaint;
+window.getCurrentUser =
+    getCurrentUser;
 
-window.getMyComplaints = getMyComplaints;
 
-window.getComplaint = getComplaint;
+window.logout =
+    logout;
+
+
+window.createComplaint =
+    createComplaint;
+
+
+window.getMyComplaints =
+    getMyComplaints;
+
+
+window.getComplaint =
+    getComplaint;
+
+
+window.getWardenComplaints =
+    getWardenComplaints;
+
+
+window.updateWardenComplaintStatus =
+    updateWardenComplaintStatus;
+
+
+window.getAdminUsers =
+    getAdminUsers;
+
+
+window.createAdminUser =
+    createAdminUser;
+
+
+window.updateAdminUserStatus =
+    updateAdminUserStatus;
+
+
+window.getAdminRooms =
+    getAdminRooms;
+
+
+window.createAdminRoom =
+    createAdminRoom;
+
+
+window.assignStudentToRoom =
+    assignStudentToRoom;
+
+
+window.removeStudentFromRoom =
+    removeStudentFromRoom;

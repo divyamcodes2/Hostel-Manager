@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Hostel Manager - Admin Dashboard
+    </title>
+
+
+    <link rel="stylesheet" href="../css/student.css">
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <style>
+        .admin-page {
+
+            min-height:
+                100vh;
+
+            background:
+                #173b42;
+
+        }
+
+
+        .admin-shell {
+
+            width:
+                min(100%, 1400px);
+
+            margin:
+                0 auto;
+
+            padding:
+                30px 24px 50px;
+
+        }
+
+
+        .admin-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                20px;
+
+            margin-bottom:
+                25px;
+
+            color:
+                white;
+
+        }
+
+
+        .admin-header h1 {
+
+            margin:
+                5px 0 0;
+
+            font-family:
+                "Space Grotesk",
+                sans-serif;
+
+        }
+
+
+        .admin-logout {
+
+            padding:
+                11px 18px;
+
+            border:
+                1px solid rgba(255,
+                    255,
+                    255,
+                    0.3);
+
+            border-radius:
+                8px;
+
+            background:
+                rgba(255,
+                    255,
+                    255,
+                    0.08);
+
+            color:
+                white;
+
+            font:
+                inherit;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .admin-logout:hover {
+
+            background:
+                rgba(255,
+                    255,
+                    255,
+                    0.15);
+
+        }
+
+
+        .admin-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,
+                    1fr);
+
+            gap:
+                15px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .admin-stat {
+
+            background:
+                white;
+
+            border-radius:
+                12px;
+
+            padding:
+                20px;
+
+        }
+
+
+        .admin-stat-label {
+
+            color:
+                #697586;
+
+            font-size:
+                0.82rem;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .admin-stat-value {
+
+            font-family:
+                "Space Grotesk",
+                sans-serif;
+
+            font-size:
+                2rem;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .admin-panel {
+
+            background:
+                white;
+
+            border-radius:
+                13px;
+
+            padding:
+                22px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .admin-panel-heading {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                18px;
+
+        }
+
+
+        .admin-panel-heading h2 {
+
+            margin:
+                4px 0 0;
+
+            font-family:
+                "Space Grotesk",
+                sans-serif;
+
+        }
+
+
+        .admin-button {
+
+            padding:
+                10px 14px;
+
+            border:
+                0;
+
+            border-radius:
+                8px;
+
+            background:
+                #087f8c;
+
+            color:
+                white;
+
+            font:
+                inherit;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .admin-button:hover {
+
+            opacity:
+                0.9;
+
+        }
+
+
+        .admin-button:disabled {
+
+            opacity:
+                0.6;
+
+            cursor:
+                wait;
+
+        }
+
+
+        .admin-secondary-button {
+
+            padding:
+                9px 13px;
+
+            border:
+                1px solid #d8dee3;
+
+            border-radius:
+                7px;
+
+            background:
+                white;
+
+            color:
+                #17202a;
+
+            font:
+                inherit;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .admin-table-wrapper {
+
+            overflow-x:
+                auto;
+
+        }
+
+
+        .admin-table {
+
+            width:
+                100%;
+
+            min-width:
+                850px;
+
+            border-collapse:
+                collapse;
+
+        }
+
+
+        .admin-table th {
+
+            padding:
+                12px;
+
+            background:
+                #f5f7f8;
+
+            color:
+                #697586;
+
+            text-align:
+                left;
+
+            font-size:
+                0.76rem;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .admin-table td {
+
+            padding:
+                13px 12px;
+
+            border-top:
+                1px solid #edf0f2;
+
+            vertical-align:
+                middle;
+
+        }
+
+
+        .admin-role {
+
+            display:
+                inline-block;
+
+            padding:
+                5px 9px;
+
+            border-radius:
+                6px;
+
+            background:
+                #eef4f3;
+
+            font-size:
+                0.78rem;
+
+            font-weight:
+                700;
+
+            text-transform:
+                capitalize;
+
+        }
+
+
+        .admin-active {
+
+            color:
+                #247a4b;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .admin-inactive {
+
+            color:
+                #b42318;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .admin-form {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,
+                    1fr);
+
+            gap:
+                12px;
+
+            align-items:
+                end;
+
+        }
+
+
+        .admin-form-group {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                6px;
+
+        }
+
+
+        .admin-form-group label {
+
+            font-size:
+                0.8rem;
+
+            font-weight:
+                700;
+
+            color:
+                #4b5563;
+
+        }
+
+
+        .admin-form-group input,
+        .admin-form-group select {
+
+            width:
+                100%;
+
+            height:
+                43px;
+
+            padding:
+                0 11px;
+
+            border:
+                1px solid #d8dee3;
+
+            border-radius:
+                7px;
+
+            background:
+                white;
+
+            font:
+                inherit;
+
+            outline:
+                none;
+
+        }
+
+
+        .admin-form-group input:focus,
+        .admin-form-group select:focus {
+
+            border-color:
+                #087f8c;
+
+            box-shadow:
+                0 0 0 3px rgba(8,
+                    127,
+                    140,
+                    0.1);
+
+        }
+
+
+        .admin-assignment-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr auto;
+
+            gap:
+                12px;
+
+            align-items:
+                end;
+
+        }
+
+
+        .admin-message {
+
+            margin-top:
+                12px;
+
+            font-size:
+                0.88rem;
+
+        }
+
+
+        .admin-success {
+
+            color:
+                #247a4b;
+
+        }
+
+
+        .admin-error {
+
+            color:
+                #b42318;
+
+        }
+
+
+        .admin-empty {
+
+            padding:
+                35px 15px;
+
+            text-align:
+                center;
+
+            color:
+                #697586;
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .admin-grid {
+
+                grid-template-columns:
+                    repeat(2,
+                        1fr);
+
+            }
+
+
+            .admin-form {
+
+                grid-template-columns:
+                    repeat(2,
+                        1fr);
+
+            }
+
+
+            .admin-assignment-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .admin-shell {
+
+                padding:
+                    20px 14px 40px;
+
+            }
+
+
+            .admin-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .admin-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .admin-form {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body class="admin-page">
+
+
+    <main class="admin-shell">
+
+
+        <!-- ==================================================
+             HEADER
+        =================================================== -->
+
+        <header class="admin-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    Hostel Manager
+                </p>
+
+
+                <h1 id="admin-greeting">
+                    Admin Dashboard
+                </h1>
+
+            </div>
+
+
+            <button type="button" class="admin-logout" id="admin-logout">
+
+                <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+
+                Log out
+
+            </button>
+
+        </header>
+
+
+        <!-- ==================================================
+             STATISTICS
+        =================================================== -->
+
+        <section class="admin-grid">
+
+
+            <div class="admin-stat">
+
+                <div class="admin-stat-label">
+                    Total users
+                </div>
+
+
+                <div class="admin-stat-value" id="total-users">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <div class="admin-stat-label">
+                    Students
+                </div>
+
+
+                <div class="admin-stat-value" id="total-students">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <div class="admin-stat-label">
+                    Wardens
+                </div>
+
+
+                <div class="admin-stat-value" id="total-wardens">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="admin-stat">
+
+                <div class="admin-stat-label">
+                    Active users
+                </div>
+
+
+                <div class="admin-stat-value" id="active-users">
+                    0
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ==================================================
+             CREATE USER
+        =================================================== -->
+
+        <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        User management
+                    </p>
+
+
+                    <h2>
+                        Create user
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <form class="admin-form" id="create-user-form">
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-user-name">
+                        Name
+                    </label>
+
+
+                    <input type="text" id="new-user-name" placeholder="Full name" required>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-user-email">
+                        Email
+                    </label>
+
+
+                    <input type="email" id="new-user-email" placeholder="user@example.com" required>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-user-password">
+                        Password
+                    </label>
+
+
+                    <input type="password" id="new-user-password" placeholder="Password" required>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-user-role">
+                        Role
+                    </label>
+
+
+                    <select id="new-user-role" required>
+
+                        <option value="student">
+                            Student
+                        </option>
+
+
+                        <option value="warden">
+                            Warden
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button type="submit" class="admin-button" id="create-user-button">
+                    Create user
+                </button>
+
+
+            </form>
+
+
+            <div id="create-user-message" class="admin-message"></div>
+
+        </section>
+
+
+        <!-- ==================================================
+             CREATE ROOM
+        =================================================== -->
+
+        <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Room management
+                    </p>
+
+
+                    <h2>
+                        Create room
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <form class="admin-form" id="create-room-form">
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-room-block">
+                        Hostel block
+                    </label>
+
+
+                    <input type="text" id="new-room-block" placeholder="A" required>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-room-number">
+                        Room number
+                    </label>
+
+
+                    <input type="text" id="new-room-number" placeholder="A-103" required>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="new-room-capacity">
+                        Capacity
+                    </label>
+
+
+                    <input type="number" id="new-room-capacity" min="1" max="20" value="3" required>
+
+                </div>
+
+
+                <button type="submit" class="admin-button" id="create-room-button">
+                    Create room
+                </button>
+
+
+            </form>
+
+
+            <div id="create-room-message" class="admin-message"></div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ROOM ASSIGNMENT
+        =================================================== -->
+
+        <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Room management
+                    </p>
+
+
+                    <h2>
+                        Assign student to room
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-assignment-grid">
+
+
+                <div class="admin-form-group">
+
+                    <label for="assignment-student">
+                        Student
+                    </label>
+
+
+                    <select id="assignment-student">
+
+                        <option value="">
+                            Select student
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="admin-form-group">
+
+                    <label for="assignment-room">
+                        Room
+                    </label>
+
+
+                    <select id="assignment-room">
+
+                        <option value="">
+                            Select room
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button type="button" class="admin-button" id="assign-room-button">
+                    Assign room
+                </button>
+
+            </div>
+
+
+            <div id="assignment-message" class="admin-message"></div>
+
+        </section>
+
+
+        <!-- ==================================================
+             USERS
+        =================================================== -->
+
+        <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Accounts
+                    </p>
+
+
+                    <h2>
+                        Users
+                    </h2>
+
+                </div>
+
+
+                <button type="button" class="admin-secondary-button" id="refresh-users">
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div class="admin-table-wrapper" id="users-container">
+
+                <div class="admin-empty">
+                    Loading users...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ROOMS
+        =================================================== -->
+
+        <section class="admin-panel">
+
+            <div class="admin-panel-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Accommodation
+                    </p>
+
+
+                    <h2>
+                        Rooms
+                    </h2>
+
+                </div>
+
+
+                <button type="button" class="admin-secondary-button" id="refresh-rooms">
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div class="admin-table-wrapper" id="rooms-container">
+
+                <div class="admin-empty">
+                    Loading rooms...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+
+
+    <script>
+
+        // ==================================================
+        // ELEMENTS
+        // ==================================================
+
+        const adminGreeting =
+            document.getElementById(
+                "admin-greeting"
+            );
+
+
+        const adminLogout =
+            document.getElementById(
+                "admin-logout"
+            );
+
+
+        const createUserForm =
+            document.getElementById(
+                "create-user-form"
+            );
+
+
+        const createUserButton =
+            document.getElementById(
+                "create-user-button"
+            );
+
+
+        const createUserMessage =
+            document.getElementById(
+                "create-user-message"
+            );
+
+
+        const createRoomForm =
+            document.getElementById(
+                "create-room-form"
+            );
+
+
+        const createRoomButton =
+            document.getElementById(
+                "create-room-button"
+            );
+
+
+        const createRoomMessage =
+            document.getElementById(
+                "create-room-message"
+            );
+
+
+        const usersContainer =
+            document.getElementById(
+                "users-container"
+            );
+
+
+        const roomsContainer =
+            document.getElementById(
+                "rooms-container"
+            );
+
+
+        const refreshUsersButton =
+            document.getElementById(
+                "refresh-users"
+            );
+
+
+        const refreshRoomsButton =
+            document.getElementById(
+                "refresh-rooms"
+            );
+
+
+        const assignmentStudent =
+            document.getElementById(
+                "assignment-student"
+            );
+
+
+        const assignmentRoom =
+            document.getElementById(
+                "assignment-room"
+            );
+
+
+        const assignRoomButton =
+            document.getElementById(
+                "assign-room-button"
+            );
+
+
+        const assignmentMessage =
+            document.getElementById(
+                "assignment-message"
+            );
+
+
+        // ==================================================
+        // LOAD ADMIN
+        // ==================================================
+
+        async function loadAdmin() {
+
+            try {
+
+                const data =
+                    await getCurrentUser();
+
+
+                if (
+                    !data ||
+                    !data.user
+                ) {
+
+                    window.location.href =
+                        "adminLogin.html";
+
+                    return;
+
+                }
+
+
+                if (
+                    data.user.role !==
+                    "admin"
+                ) {
+
+                    alert(
+                        "Only admins can access this dashboard."
+                    );
+
+
+                    window.location.href =
+                        "adminLogin.html";
+
+                    return;
+
+                }
+
+
+                adminGreeting.textContent =
+                    `Welcome, ${data.user.name}.`;
+
+
+                await Promise.all([
+
+                    loadUsers(),
+
+                    loadRooms()
+
+                ]);
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Admin authentication error:",
+                    error
+                );
+
+
+                window.location.href =
+                    "adminLogin.html";
+
+            }
+
+        }
+
+
+        // ==================================================
+        // LOAD USERS
+        // ==================================================
+
+        async function loadUsers() {
+
+            usersContainer.innerHTML = `
+
+                <div class="admin-empty">
+                    Loading users...
+                </div>
+
+            `;
+
+
+            try {
+
+                const data =
+                    await getAdminUsers();
+
+
+                const users =
+                    data.users || [];
+
+
+                updateUserStatistics(
+                    users
+                );
+
+
+                populateStudentDropdown(
+                    users
+                );
+
+
+                renderUsers(
+                    users
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Failed to load users:",
+                    error
+                );
+
+
+                usersContainer.innerHTML = `
+
+                    <div class="admin-error">
+
+                        Unable to load users:
+
+                        ${escapeHtml(
+                    error.message
+                )}
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // USER STATISTICS
+        // ==================================================
+
+        function updateUserStatistics(
+            users
+        ) {
+
+            const students =
+                users.filter(
+                    user =>
+                        user.role ===
+                        "student"
+                ).length;
+
+
+            const wardens =
+                users.filter(
+                    user =>
+                        user.role ===
+                        "warden"
+                ).length;
+
+
+            const active =
+                users.filter(
+                    user =>
+                        user.active ===
+                        true
+                ).length;
+
+
+            document.getElementById(
+                "total-users"
+            ).textContent =
+                users.length;
+
+
+            document.getElementById(
+                "total-students"
+            ).textContent =
+                students;
+
+
+            document.getElementById(
+                "total-wardens"
+            ).textContent =
+                wardens;
+
+
+            document.getElementById(
+                "active-users"
+            ).textContent =
+                active;
+
+        }
+
+
+        // ==================================================
+        // RENDER USERS
+        // ==================================================
+
+        function renderUsers(
+            users
+        ) {
+
+            if (
+                users.length ===
+                0
+            ) {
+
+                usersContainer.innerHTML = `
+
+                    <div class="admin-empty">
+                        No users found.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            let html = `
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                            <th>
+                                Room ID
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+            `;
+
+
+            users.forEach(
+                function (user) {
+
+                    const status =
+                        user.active
+                            ? "Active"
+                            : "Inactive";
+
+
+                    const statusClass =
+                        user.active
+                            ? "admin-active"
+                            : "admin-inactive";
+
+
+                    const actionText =
+                        user.active
+                            ? "Deactivate"
+                            : "Activate";
+
+
+                    const roomText =
+                        user.room_id !== null &&
+                            user.room_id !== undefined
+                            ? escapeHtml(
+                                user.room_id
+                            )
+                            : "Not assigned";
+
+
+                    const removeButton =
+                        user.role === "student" &&
+                            user.room_id !== null &&
+                            user.room_id !== undefined
+                            ? `
+
+                                <button
+                                    type="button"
+                                    class="admin-secondary-button remove-room-button"
+                                    data-user-id="${escapeHtml(
+                                user.id
+                            )}"
+                                    style="
+                                        margin-left: 6px;
+                                    "
+                                >
+                                    Remove room
+                                </button>
+
+                            `
+                            : "";
+
+
+                    html += `
+
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                        user.id
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        user.name
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        user.email
+                    )}
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="admin-role"
+                                >
+                                    ${escapeHtml(
+                        user.role
+                    )}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                ${roomText}
+                            </td>
+
+
+                            <td>
+
+                                <span
+                                    class="${statusClass}"
+                                >
+                                    ${status}
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                ${user.role ===
+                            "admin"
+
+                            ? "<span>Admin</span>"
+
+                            : `
+
+                                            <button
+                                                type="button"
+                                                class="admin-secondary-button user-status-button"
+                                                data-user-id="${escapeHtml(
+                                user.id
+                            )}"
+                                                data-active="${user.active}"
+                                            >
+                                                ${actionText}
+                                            </button>
+
+                                            ${removeButton}
+
+                                        `
+                        }
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            html += `
+
+                    </tbody>
+
+                </table>
+
+            `;
+
+
+            usersContainer.innerHTML =
+                html;
+
+
+            attachUserStatusListeners();
+
+            attachRemoveRoomListeners();
+
+        }
+
+
+        // ==================================================
+        // USER STATUS
+        // ==================================================
+
+        function attachUserStatusListeners() {
+
+            const buttons =
+                document.querySelectorAll(
+                    ".user-status-button"
+                );
+
+
+            buttons.forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        async function () {
+
+                            const userId =
+                                Number(
+                                    button.dataset.userId
+                                );
+
+
+                            const currentActive =
+                                button.dataset.active ===
+                                "true";
+
+
+                            const newActive =
+                                !currentActive;
+
+
+                            const action =
+                                newActive
+                                    ? "activate"
+                                    : "deactivate";
+
+
+                            const confirmed =
+                                confirm(
+                                    `Are you sure you want to ${action} this user?`
+                                );
+
+
+                            if (!confirmed) {
+
+                                return;
+
+                            }
+
+
+                            button.disabled =
+                                true;
+
+
+                            try {
+
+                                await updateAdminUserStatus(
+                                    userId,
+                                    newActive
+                                );
+
+
+                                await Promise.all([
+
+                                    loadUsers(),
+
+                                    loadRooms()
+
+                                ]);
+
+                            }
+                            catch (error) {
+
+                                console.error(
+                                    "User status update error:",
+                                    error
+                                );
+
+
+                                alert(
+                                    error.message
+                                );
+
+                            }
+                            finally {
+
+                                button.disabled =
+                                    false;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // REMOVE STUDENT FROM ROOM
+        // ==================================================
+
+        function attachRemoveRoomListeners() {
+
+            const buttons =
+                document.querySelectorAll(
+                    ".remove-room-button"
+                );
+
+
+            buttons.forEach(
+                function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        async function () {
+
+                            const userId =
+                                Number(
+                                    button.dataset.userId
+                                );
+
+
+                            const confirmed =
+                                confirm(
+                                    "Remove this student from their current room?"
+                                );
+
+
+                            if (!confirmed) {
+
+                                return;
+
+                            }
+
+
+                            button.disabled =
+                                true;
+
+
+                            button.textContent =
+                                "Removing...";
+
+
+                            try {
+
+                                await removeStudentFromRoom(
+                                    userId
+                                );
+
+
+                                await Promise.all([
+
+                                    loadUsers(),
+
+                                    loadRooms()
+
+                                ]);
+
+                            }
+                            catch (error) {
+
+                                console.error(
+                                    "Remove room error:",
+                                    error
+                                );
+
+
+                                alert(
+                                    error.message
+                                );
+
+                            }
+                            finally {
+
+                                button.disabled =
+                                    false;
+
+                                button.textContent =
+                                    "Remove room";
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // CREATE USER
+        // ==================================================
+
+        createUserForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const name =
+                    document
+                        .getElementById(
+                            "new-user-name"
+                        )
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById(
+                            "new-user-email"
+                        )
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById(
+                            "new-user-password"
+                        )
+                        .value;
+
+
+                const role =
+                    document
+                        .getElementById(
+                            "new-user-role"
+                        )
+                        .value;
+
+
+                createUserMessage.textContent =
+                    "";
+
+
+                if (
+                    !name ||
+                    !email ||
+                    !password ||
+                    !role
+                ) {
+
+                    createUserMessage.textContent =
+                        "Please fill in all fields.";
+
+
+                    createUserMessage.className =
+                        "admin-message admin-error";
+
+
+                    return;
+
+                }
+
+
+                createUserButton.disabled =
+                    true;
+
+
+                createUserButton.textContent =
+                    "Creating...";
+
+
+                try {
+
+                    await createAdminUser(
+                        name,
+                        email,
+                        password,
+                        role
+                    );
+
+
+                    createUserForm.reset();
+
+
+                    createUserMessage.textContent =
+                        "User created successfully.";
+
+
+                    createUserMessage.className =
+                        "admin-message admin-success";
+
+
+                    await loadUsers();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Create user error:",
+                        error
+                    );
+
+
+                    createUserMessage.textContent =
+                        error.message;
+
+
+                    createUserMessage.className =
+                        "admin-message admin-error";
+
+                }
+                finally {
+
+                    createUserButton.disabled =
+                        false;
+
+
+                    createUserButton.textContent =
+                        "Create user";
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // CREATE ROOM
+        // ==================================================
+
+        createRoomForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const hostelBlock =
+                    document
+                        .getElementById(
+                            "new-room-block"
+                        )
+                        .value
+                        .trim();
+
+
+                const roomNumber =
+                    document
+                        .getElementById(
+                            "new-room-number"
+                        )
+                        .value
+                        .trim();
+
+
+                const capacity =
+                    document
+                        .getElementById(
+                            "new-room-capacity"
+                        )
+                        .value;
+
+
+                createRoomMessage.textContent =
+                    "";
+
+
+                if (
+                    !hostelBlock ||
+                    !roomNumber ||
+                    !capacity
+                ) {
+
+                    createRoomMessage.textContent =
+                        "Please fill in all room fields.";
+
+
+                    createRoomMessage.className =
+                        "admin-message admin-error";
+
+
+                    return;
+
+                }
+
+
+                createRoomButton.disabled =
+                    true;
+
+
+                createRoomButton.textContent =
+                    "Creating...";
+
+
+                try {
+
+                    await createAdminRoom(
+                        hostelBlock,
+                        roomNumber,
+                        capacity
+                    );
+
+
+                    createRoomForm.reset();
+
+
+                    document.getElementById(
+                        "new-room-capacity"
+                    ).value =
+                        3;
+
+
+                    createRoomMessage.textContent =
+                        "Room created successfully.";
+
+
+                    createRoomMessage.className =
+                        "admin-message admin-success";
+
+
+                    await loadRooms();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Create room error:",
+                        error
+                    );
+
+
+                    createRoomMessage.textContent =
+                        error.message;
+
+
+                    createRoomMessage.className =
+                        "admin-message admin-error";
+
+                }
+                finally {
+
+                    createRoomButton.disabled =
+                        false;
+
+
+                    createRoomButton.textContent =
+                        "Create room";
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // LOAD ROOMS
+        // ==================================================
+
+        async function loadRooms() {
+
+            roomsContainer.innerHTML = `
+
+                <div class="admin-empty">
+                    Loading rooms...
+                </div>
+
+            `;
+
+
+            try {
+
+                const data =
+                    await getAdminRooms();
+
+
+                const rooms =
+                    data.rooms || [];
+
+
+                populateRoomDropdown(
+                    rooms
+                );
+
+
+                renderRooms(
+                    rooms
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Failed to load rooms:",
+                    error
+                );
+
+
+                roomsContainer.innerHTML = `
+
+                    <div class="admin-error">
+
+                        Unable to load rooms:
+
+                        ${escapeHtml(
+                    error.message
+                )}
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // RENDER ROOMS
+        // ==================================================
+
+        function renderRooms(
+            rooms
+        ) {
+
+            if (
+                rooms.length ===
+                0
+            ) {
+
+                roomsContainer.innerHTML = `
+
+                    <div class="admin-empty">
+                        No rooms found.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            let html = `
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Room ID
+                            </th>
+
+                            <th>
+                                Block
+                            </th>
+
+                            <th>
+                                Room Number
+                            </th>
+
+                            <th>
+                                Capacity
+                            </th>
+
+                            <th>
+                                Occupied
+                            </th>
+
+                            <th>
+                                Available
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+            `;
+
+
+            rooms.forEach(
+                function (room) {
+
+                    html += `
+
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                        room.id
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        room.hostel_block
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        room.room_number
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        room.capacity
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        room.occupied
+                    )}
+                            </td>
+
+
+                            <td>
+                                ${escapeHtml(
+                        room.available
+                    )}
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            html += `
+
+                    </tbody>
+
+                </table>
+
+            `;
+
+
+            roomsContainer.innerHTML =
+                html;
+
+        }
+
+
+        // ==================================================
+        // STUDENT DROPDOWN
+        // ==================================================
+
+        function populateStudentDropdown(
+            users
+        ) {
+
+            const students =
+                users.filter(
+                    user =>
+                        user.role ===
+                        "student" &&
+                        user.active ===
+                        true
+                );
+
+
+            assignmentStudent.innerHTML = `
+
+                <option value="">
+                    Select student
+                </option>
+
+            `;
+
+
+            students.forEach(
+                function (student) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        student.id;
+
+
+                    const roomText =
+                        student.room_id !==
+                            null &&
+                            student.room_id !==
+                            undefined
+
+                            ? `Room ID ${student.room_id}`
+
+                            : "No room";
+
+
+                    option.textContent =
+                        `${student.name} - ${roomText}`;
+
+
+                    assignmentStudent.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // ROOM DROPDOWN
+        // ==================================================
+
+        function populateRoomDropdown(
+            rooms
+        ) {
+
+            assignmentRoom.innerHTML = `
+
+                <option value="">
+                    Select room
+                </option>
+
+            `;
+
+
+            rooms.forEach(
+                function (room) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        room.id;
+
+
+                    option.disabled =
+                        room.available <=
+                        0;
+
+
+                    option.textContent =
+                        `${room.hostel_block}-${room.room_number} (${room.available} available)`;
+
+
+                    assignmentRoom.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==================================================
+        // ASSIGN ROOM
+        // ==================================================
+
+        assignRoomButton.addEventListener(
+            "click",
+            async function () {
+
+                const userId =
+                    assignmentStudent.value;
+
+
+                const roomId =
+                    assignmentRoom.value;
+
+
+                assignmentMessage.textContent =
+                    "";
+
+
+                if (
+                    !userId ||
+                    !roomId
+                ) {
+
+                    assignmentMessage.textContent =
+                        "Please select both a student and a room.";
+
+
+                    assignmentMessage.className =
+                        "admin-message admin-error";
+
+
+                    return;
+
+                }
+
+
+                assignRoomButton.disabled =
+                    true;
+
+
+                assignRoomButton.textContent =
+                    "Assigning...";
+
+
+                try {
+
+                    await assignStudentToRoom(
+                        Number(userId),
+                        Number(roomId)
+                    );
+
+
+                    assignmentMessage.textContent =
+                        "Student assigned to room successfully.";
+
+
+                    assignmentMessage.className =
+                        "admin-message admin-success";
+
+
+                    assignmentStudent.value =
+                        "";
+
+
+                    assignmentRoom.value =
+                        "";
+
+
+                    await Promise.all([
+
+                        loadUsers(),
+
+                        loadRooms()
+
+                    ]);
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Room assignment error:",
+                        error
+                    );
+
+
+                    assignmentMessage.textContent =
+                        error.message;
+
+
+                    assignmentMessage.className =
+                        "admin-message admin-error";
+
+                }
+                finally {
+
+                    assignRoomButton.disabled =
+                        false;
+
+
+                    assignRoomButton.textContent =
+                        "Assign room";
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // REFRESH USERS
+        // ==================================================
+
+        refreshUsersButton.addEventListener(
+            "click",
+            async function () {
+
+                refreshUsersButton.disabled =
+                    true;
+
+
+                try {
+
+                    await loadUsers();
+
+                }
+                finally {
+
+                    refreshUsersButton.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // REFRESH ROOMS
+        // ==================================================
+
+        refreshRoomsButton.addEventListener(
+            "click",
+            async function () {
+
+                refreshRoomsButton.disabled =
+                    true;
+
+
+                try {
+
+                    await loadRooms();
+
+                }
+                finally {
+
+                    refreshRoomsButton.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+
+        // ==================================================
+        // LOGOUT
+        // ==================================================
+
+        adminLogout.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await logout();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Admin logout error:",
+                        error
+                    );
+
+                }
+
+
+                window.location.href =
+                    "adminLogin.html";
+
+            }
+        );
+
+
+        // ==================================================
+        // ESCAPE HTML
+        // ==================================================
+
+        function escapeHtml(
+            value
+        ) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        // ==================================================
+        // START
+        // ==================================================
+
+        loadAdmin();
+
+    </script>
+
+
+</body>
+
+</html>

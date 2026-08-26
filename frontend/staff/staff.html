@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Hostel Manager - Warden Dashboard
+    </title>
+
+
+    <link rel="stylesheet" href="../css/student.css">
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <style>
+        /* ==========================================
+           WARDEN STATUS CONTROLS
+        ========================================== */
+
+        .warden-status-section {
+
+            margin-top:
+                20px;
+
+            padding-top:
+                18px;
+
+            border-top:
+                1px solid #e5e7eb;
+
+        }
+
+
+        .warden-status-label {
+
+            display:
+                block;
+
+            margin-bottom:
+                8px;
+
+            font-size:
+                0.78rem;
+
+            font-weight:
+                700;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.04em;
+
+            color:
+                #697586;
+
+        }
+
+
+        .warden-status-select {
+
+            width:
+                100%;
+
+            max-width:
+                240px;
+
+            padding:
+                11px 13px;
+
+            border:
+                1px solid #d7dce0;
+
+            border-radius:
+                8px;
+
+            background:
+                #ffffff;
+
+            color:
+                #17202a;
+
+            font:
+                inherit;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            outline:
+                none;
+
+        }
+
+
+        .warden-status-select:focus {
+
+            border-color:
+                #087f8c;
+
+            box-shadow:
+                0 0 0 3px rgba(8,
+                    127,
+                    140,
+                    0.12);
+
+        }
+
+
+        .warden-status-select:disabled {
+
+            cursor:
+                wait;
+
+            opacity:
+                0.65;
+
+        }
+
+
+        .warden-status-message {
+
+            margin-top:
+                8px;
+
+            font-size:
+                0.85rem;
+
+            color:
+                #697586;
+
+        }
+
+
+        .warden-refresh-button {
+
+            margin-top:
+                16px;
+
+            padding:
+                10px 15px;
+
+            border:
+                1px solid #d7dce0;
+
+            border-radius:
+                8px;
+
+            background:
+                #ffffff;
+
+            color:
+                #17202a;
+
+            font:
+                inherit;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .warden-refresh-button:hover {
+
+            background:
+                #f5f7fa;
+
+        }
+
+
+        .warden-refresh-button:disabled {
+
+            cursor:
+                wait;
+
+            opacity:
+                0.6;
+
+        }
+
+
+        .warden-error-message {
+
+            padding:
+                14px;
+
+            border-radius:
+                8px;
+
+            background:
+                #fff3f1;
+
+            color:
+                #b42318;
+
+        }
+
+
+        .warden-success-message {
+
+            color:
+                #247a4b;
+
+        }
+    </style>
+
+</head>
+
+
+<body class="student-page">
+
+
+    <main class="student-shell">
+
+
+        <!-- ==========================================
+             WARDEN DASHBOARD
+        =========================================== -->
+
+        <section class="student-dashboard" id="warden-dashboard">
+
+
+            <!-- ==========================================
+                 HEADER
+            =========================================== -->
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Warden dashboard
+                    </p>
+
+
+                    <h1 id="warden-greeting">
+                        Welcome, Warden.
+                    </h1>
+
+                </div>
+
+
+                <button class="logout-button" type="button" id="warden-logout">
+                    Log out
+                </button>
+
+            </header>
+
+
+            <!-- ==========================================
+                 SUMMARY
+            =========================================== -->
+
+            <section class="dashboard-card" style="margin-bottom: 24px;">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            Overview
+                        </p>
+
+
+                        <h2>
+                            Complaint Summary
+                        </h2>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-clipboard-list card-icon" aria-hidden="true"></i>
+
+                </div>
+
+
+                <div style="
+                        display: grid;
+                        grid-template-columns:
+                            repeat(
+                                auto-fit,
+                                minmax(140px, 1fr)
+                            );
+                        gap: 16px;
+                    ">
+
+
+                    <!-- TOTAL -->
+
+                    <div style="
+                            padding: 18px;
+                            border-radius: 10px;
+                            background: #f5f7fa;
+                        ">
+
+                        <p class="eyebrow" style="margin-bottom: 5px;">
+                            Total
+                        </p>
+
+
+                        <h2 id="total-complaints" style="margin: 0;">
+                            0
+                        </h2>
+
+                    </div>
+
+
+                    <!-- PENDING -->
+
+                    <div style="
+                            padding: 18px;
+                            border-radius: 10px;
+                            background: #f5f7fa;
+                        ">
+
+                        <p class="eyebrow" style="margin-bottom: 5px;">
+                            Pending
+                        </p>
+
+
+                        <h2 id="pending-complaints" style="margin: 0;">
+                            0
+                        </h2>
+
+                    </div>
+
+
+                    <!-- IN PROGRESS -->
+
+                    <div style="
+                            padding: 18px;
+                            border-radius: 10px;
+                            background: #f5f7fa;
+                        ">
+
+                        <p class="eyebrow" style="margin-bottom: 5px;">
+                            In Progress
+                        </p>
+
+
+                        <h2 id="in-progress-complaints" style="margin: 0;">
+                            0
+                        </h2>
+
+                    </div>
+
+
+                    <!-- RESOLVED -->
+
+                    <div style="
+                            padding: 18px;
+                            border-radius: 10px;
+                            background: #f5f7fa;
+                        ">
+
+                        <p class="eyebrow" style="margin-bottom: 5px;">
+                            Resolved
+                        </p>
+
+
+                        <h2 id="resolved-complaints" style="margin: 0;">
+                            0
+                        </h2>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- ==========================================
+                 COMPLAINT LIST
+            =========================================== -->
+
+            <section class="dashboard-card">
+
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="eyebrow">
+                            Requests
+                        </p>
+
+
+                        <h2>
+                            Student Complaints
+                        </h2>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-list-check card-icon" aria-hidden="true"></i>
+
+                </div>
+
+
+                <button type="button" class="warden-refresh-button" id="refresh-complaints">
+
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+
+                    Refresh complaints
+
+                </button>
+
+
+                <div id="complaints-container" style="margin-top: 18px;">
+
+                    <p>
+                        Loading complaints...
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         API
+    =========================================== -->
+
+    <script src="../js/api.js"></script>
+
+
+    <!-- ==========================================
+         WARDEN DASHBOARD JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+
+        // ==========================================
+        // ELEMENT REFERENCES
+        // ==========================================
+
+        const wardenDashboard =
+            document.getElementById(
+                "warden-dashboard"
+            );
+
+
+        const wardenGreeting =
+            document.getElementById(
+                "warden-greeting"
+            );
+
+
+        const logoutButton =
+            document.getElementById(
+                "warden-logout"
+            );
+
+
+        const refreshButton =
+            document.getElementById(
+                "refresh-complaints"
+            );
+
+
+        const complaintsContainer =
+            document.getElementById(
+                "complaints-container"
+            );
+
+
+        const totalComplaints =
+            document.getElementById(
+                "total-complaints"
+            );
+
+
+        const pendingComplaints =
+            document.getElementById(
+                "pending-complaints"
+            );
+
+
+        const inProgressComplaints =
+            document.getElementById(
+                "in-progress-complaints"
+            );
+
+
+        const resolvedComplaints =
+            document.getElementById(
+                "resolved-complaints"
+            );
+
+
+        // ==========================================
+        // LOAD WARDEN
+        // ==========================================
+
+        async function loadWarden() {
+
+            try {
+
+                const data =
+                    await getCurrentUser();
+
+
+                if (
+                    !data ||
+                    !data.user
+                ) {
+
+                    window.location.href =
+                        "staffLogin.html";
+
+                    return;
+
+                }
+
+
+                if (
+                    data.user.role !== "warden"
+                ) {
+
+                    alert(
+                        "Only wardens can access this page."
+                    );
+
+
+                    window.location.href =
+                        "staffLogin.html";
+
+                    return;
+
+                }
+
+
+                wardenGreeting.textContent =
+                    `Welcome, ${data.user.name}.`;
+
+
+                await loadComplaints();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Warden session error:",
+                    error
+                );
+
+
+                window.location.href =
+                    "staffLogin.html";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOAD COMPLAINTS
+        // ==========================================
+
+        async function loadComplaints() {
+
+            complaintsContainer.innerHTML = `
+
+                <p>
+                    Loading complaints...
+                </p>
+
+            `;
+
+
+            try {
+
+                const data =
+                    await getWardenComplaints();
+
+
+                const complaints =
+                    data.complaints || [];
+
+
+                updateSummary(
+                    complaints
+                );
+
+
+                complaintsContainer.innerHTML =
+                    "";
+
+
+                if (
+                    complaints.length === 0
+                ) {
+
+                    complaintsContainer.innerHTML = `
+
+                        <p>
+                            No complaints have been
+                            submitted yet.
+                        </p>
+
+                    `;
+
+
+                    return;
+
+                }
+
+
+                complaints.forEach(
+                    function (complaint) {
+
+                        const card =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        card.className =
+                            "dashboard-card";
+
+
+                        card.style.marginBottom =
+                            "16px";
+
+
+                        const statusClass =
+                            getStatusClass(
+                                complaint.status
+                            );
+
+
+                        card.innerHTML = `
+
+                            <!-- =========================
+                                 COMPLAINT HEADER
+                            ========================== -->
+
+                            <div class="card-heading">
+
+                                <div>
+
+                                    <p class="eyebrow">
+
+                                        ${escapeHtml(
+                            complaint.complaint_id
+                        )}
+
+                                    </p>
+
+
+                                    <h2>
+
+                                        ${escapeHtml(
+                            complaint.title
+                        )}
+
+                                    </h2>
+
+                                </div>
+
+
+                                <strong
+                                    class="status-badge ${statusClass}"
+                                >
+
+                                    ${escapeHtml(
+                            complaint.status
+                        )}
+
+                                </strong>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 COMPLAINT DETAILS
+                            ========================== -->
+
+                            <div
+                                style="
+                                    display: grid;
+                                    grid-template-columns:
+                                        repeat(
+                                            auto-fit,
+                                            minmax(140px, 1fr)
+                                        );
+                                    gap: 12px;
+                                    margin-bottom: 18px;
+                                "
+                            >
+
+
+                                <div>
+
+                                    <p class="eyebrow">
+                                        Complaint ID
+                                    </p>
+
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                            complaint.complaint_id
+                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <p class="eyebrow">
+                                        Student ID
+                                    </p>
+
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                            String(
+                                complaint.user_id
+                            )
+                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <p class="eyebrow">
+                                        Room
+                                    </p>
+
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                            String(
+                                complaint.room_id
+                            )
+                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <p class="eyebrow">
+                                        Category
+                                    </p>
+
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                            complaint.category
+                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                                <div>
+
+                                    <p class="eyebrow">
+                                        Priority
+                                    </p>
+
+
+                                    <strong>
+
+                                        ${escapeHtml(
+                            complaint.priority
+                        )}
+
+                                    </strong>
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- =========================
+                                 DESCRIPTION
+                            ========================== -->
+
+                            <div>
+
+                                <p class="eyebrow">
+                                    Description
+                                </p>
+
+
+                                <p>
+
+                                    ${escapeHtml(
+                            complaint.description
+                        )}
+
+                                </p>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 STATUS CONTROL
+                            ========================== -->
+
+                            <div
+                                class="warden-status-section"
+                            >
+
+                                <label
+                                    class="warden-status-label"
+                                    for="status-${escapeHtml(
+                            complaint.complaint_id
+                        )}"
+                                >
+
+                                    Update complaint status
+
+                                </label>
+
+
+                                <select
+                                    class="
+                                        warden-status-select
+                                        status-select-${statusClass}
+                                    "
+                                    id="status-${escapeHtml(
+                            complaint.complaint_id
+                        )}"
+                                    data-complaint-id="${escapeHtml(
+                            complaint.complaint_id
+                        )}"
+                                    data-current-status="${escapeHtml(
+                            complaint.status
+                        )}"
+                                >
+
+                                    <option
+                                        value="Pending"
+                                        ${complaint.status ===
+                                "Pending"
+                                ? "selected"
+                                : ""
+                            }
+                                    >
+                                        Pending
+                                    </option>
+
+
+                                    <option
+                                        value="In Progress"
+                                        ${complaint.status ===
+                                "In Progress"
+                                ? "selected"
+                                : ""
+                            }
+                                    >
+                                        In Progress
+                                    </option>
+
+
+                                    <option
+                                        value="Resolved"
+                                        ${complaint.status ===
+                                "Resolved"
+                                ? "selected"
+                                : ""
+                            }
+                                    >
+                                        Resolved
+                                    </option>
+
+                                </select>
+
+
+                                <p
+                                    class="warden-status-message"
+                                >
+
+                                    Current status:
+                                    <strong>
+                                        ${escapeHtml(
+                                complaint.status
+                            )}
+                                    </strong>
+
+                                </p>
+
+                            </div>
+
+                        `;
+
+
+                        complaintsContainer.appendChild(
+                            card
+                        );
+
+                    }
+                );
+
+
+                attachStatusListeners();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Complaint loading error:",
+                    error
+                );
+
+
+                complaintsContainer.innerHTML = `
+
+                    <div
+                        class="warden-error-message"
+                    >
+
+                        Unable to load complaints.
+
+                        <br><br>
+
+                        ${escapeHtml(
+                    error.message
+                )}
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // UPDATE SUMMARY
+        // ==========================================
+
+        function updateSummary(
+            complaints
+        ) {
+
+            let pending = 0;
+
+            let inProgress = 0;
+
+            let resolved = 0;
+
+
+            complaints.forEach(
+                function (complaint) {
+
+                    if (
+                        complaint.status ===
+                        "Pending"
+                    ) {
+
+                        pending++;
+
+                    }
+                    else if (
+                        complaint.status ===
+                        "In Progress"
+                    ) {
+
+                        inProgress++;
+
+                    }
+                    else if (
+                        complaint.status ===
+                        "Resolved"
+                    ) {
+
+                        resolved++;
+
+                    }
+
+                }
+            );
+
+
+            totalComplaints.textContent =
+                complaints.length;
+
+
+            pendingComplaints.textContent =
+                pending;
+
+
+            inProgressComplaints.textContent =
+                inProgress;
+
+
+            resolvedComplaints.textContent =
+                resolved;
+
+        }
+
+
+        // ==========================================
+        // STATUS CLASS
+        // ==========================================
+
+        function getStatusClass(
+            status
+        ) {
+
+            if (
+                status ===
+                "In Progress"
+            ) {
+
+                return "in-progress";
+
+            }
+
+
+            if (
+                status ===
+                "Resolved"
+            ) {
+
+                return "resolved";
+
+            }
+
+
+            return "pending";
+
+        }
+
+
+        // ==========================================
+        // HTML ESCAPING
+        // ==========================================
+
+        function escapeHtml(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        // ==========================================
+        // ATTACH STATUS LISTENERS
+        // ==========================================
+
+        function attachStatusListeners() {
+
+            const statusSelects =
+                document.querySelectorAll(
+                    ".warden-status-select"
+                );
+
+
+            statusSelects.forEach(
+                function (select) {
+
+                    select.addEventListener(
+                        "change",
+                        async function () {
+
+                            const complaintId =
+                                select.dataset.complaintId;
+
+
+                            const previousStatus =
+                                select.dataset.currentStatus;
+
+
+                            const newStatus =
+                                select.value;
+
+
+                            if (
+                                newStatus ===
+                                previousStatus
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            select.disabled =
+                                true;
+
+
+                            try {
+
+                                await updateWardenComplaintStatus(
+                                    complaintId,
+                                    newStatus
+                                );
+
+
+                                select.dataset.currentStatus =
+                                    newStatus;
+
+
+                                /*
+                                 * Refresh the entire complaint
+                                 * list so the status badge,
+                                 * summary counters and status
+                                 * message all use database data.
+                                 */
+
+                                await loadComplaints();
+
+
+                            }
+                            catch (error) {
+
+                                console.error(
+                                    "Complaint status update error:",
+                                    error
+                                );
+
+
+                                /*
+                                 * Put the dropdown back to the
+                                 * previous database status.
+                                 */
+
+                                select.value =
+                                    previousStatus;
+
+
+                                alert(
+                                    error.message
+                                );
+
+                            }
+                            finally {
+
+                                select.disabled =
+                                    false;
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ==========================================
+        // REFRESH BUTTON
+        // ==========================================
+
+        refreshButton.addEventListener(
+            "click",
+            async function () {
+
+                refreshButton.disabled =
+                    true;
+
+
+                refreshButton.textContent =
+                    "Refreshing...";
+
+
+                try {
+
+                    await loadComplaints();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Refresh error:",
+                        error
+                    );
+
+                }
+                finally {
+
+                    refreshButton.disabled =
+                        false;
+
+
+                    refreshButton.innerHTML = `
+
+                        <i
+                            class="fa-solid fa-rotate"
+                            aria-hidden="true"
+                        ></i>
+
+                        Refresh complaints
+
+                    `;
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // LOGOUT
+        // ==========================================
+
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                try {
+
+                    await logout();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+                }
+
+
+                window.location.href =
+                    "staffLogin.html";
+
+            }
+        );
+
+
+        // ==========================================
+        // START
+        // ==========================================
+
+        loadWarden();
+
+    </script>
+
+
+</body>
+
+</html>
