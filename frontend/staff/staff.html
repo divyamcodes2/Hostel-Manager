@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Warden Dashboard | Hostel Manager</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<style>
+		:root {
+			--ink: #17202a;
+			--muted: #697586;
+			--paper: #f7f8f5;
+			--panel: #ffffff;
+			--line: #dfe5e4;
+			--teal: #087f8c;
+			--coral: #d96b4f;
+			--gold: #e9c46a;
+			--green: #3d8063;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			margin: 0;
+			min-height: 100vh;
+			color: var(--ink);
+			background: #173b42;
+			font-family: 'DM Sans', sans-serif;
+		}
+
+		.dashboard-shell {
+			width: min(100% - 40px, 940px);
+			margin: 0 auto;
+			padding: 54px 0 70px;
+		}
+
+		.intro { color: #fff; margin-bottom: 28px; }
+		.intro p { margin: 0 0 16px; color: #b9ccca; font-size: .95rem; }
+		.intro h1 { margin: 0; font: 700 clamp(2rem, 4vw, 3.2rem)/1 'Space Grotesk', sans-serif; letter-spacing: 0; }
+
+		.dashboard {
+			overflow: hidden;
+			background: var(--paper);
+			border-radius: 18px;
+			box-shadow: 0 22px 50px rgba(7, 28, 32, .24);
+		}
+
+		.topbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 20px;
+			padding: 24px 30px;
+			color: #fff;
+			background: #1c4c52;
+			border-bottom: 1px solid rgba(255,255,255,.18);
+		}
+
+		.brand { display: flex; align-items: center; gap: 11px; font: 700 1.05rem 'Space Grotesk', sans-serif; }
+		.brand i { color: var(--gold); }
+		.account { display: flex; align-items: center; gap: 18px; text-align: right; font-size: .85rem; }
+		.account strong { display: block; font-weight: 700; }
+		.account button { color: #fff; background: transparent; border: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+		.content { padding: 32px; }
+		.section-title { margin: 0 0 22px; font: 700 1.25rem 'Space Grotesk', sans-serif; }
+
+		.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 34px; }
+		.stat { padding: 18px 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+		.stat-label { display: block; color: var(--muted); font-size: .82rem; font-weight: 600; }
+		.stat-value { display: block; margin-top: 8px; font: 700 2rem 'Space Grotesk', sans-serif; }
+		.stat:nth-child(2) .stat-value { color: var(--coral); }
+		.stat:nth-child(3) .stat-value { color: var(--green); }
+
+		.complaint-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 16px; }
+		.complaint-heading h2 { margin: 0; font: 700 1.1rem 'Space Grotesk', sans-serif; }
+		.filters { display: flex; gap: 10px; }
+		.filters input, .filters select { min-height: 38px; padding: 0 12px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; font: inherit; }
+		.filters input { width: min(220px, 30vw); }
+		.filters input:focus, .filters select:focus { outline: 2px solid rgba(8,127,140,.25); border-color: var(--teal); }
+
+		.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+		table { width: 100%; min-width: 650px; border-collapse: collapse; text-align: left; }
+		th, td { padding: 14px 13px; border-bottom: 1px solid var(--line); font-size: .85rem; white-space: nowrap; }
+		th { color: var(--muted); background: #f0f3f0; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+		tr:last-child td { border-bottom: 0; }
+		td:first-child { color: var(--teal); font-weight: 700; }
+		.student-link { color: var(--teal); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+		.student-link:hover { color: var(--coral); }
+		.status-select { padding: 6px 8px; color: var(--ink); background: #f7f8f5; border: 1px solid var(--line); border-radius: 5px; font: inherit; }
+		.empty, .error { padding: 28px; color: var(--muted); text-align: center; }
+		.error { color: var(--coral); }
+
+		@media (max-width: 640px) {
+			.dashboard-shell { width: min(100% - 24px, 940px); padding-top: 30px; }
+			.topbar, .content { padding: 22px 18px; }
+			.topbar { align-items: flex-start; flex-direction: column; }
+			.account { width: 100%; justify-content: space-between; text-align: left; }
+			.stats { gap: 8px; }
+			.stat { padding: 14px 12px; }
+			.stat-value { font-size: 1.6rem; }
+			.complaint-heading { align-items: stretch; flex-direction: column; }
+			.filters { flex-direction: column; }
+			.filters input { width: 100%; }
+		}
+	</style>
+</head>
+<body>
+	<main class="dashboard-shell">
+		<header class="intro">
+            <p>Welcome back,</p>
+            <h1 id="warden-name">Loading...</h1>
+
+		</header>
+
+		<section class="dashboard" aria-label="Warden complaint dashboard">
+			<nav class="topbar">
+				<div class="brand"><i class="fa-solid fa-house" aria-hidden="true"></i> Hostel Manager</div>
+				<div class="account">
+					<span>Warden / <strong id="warden-name">Loading...</strong></span>
+					<button id="logout-button" type="button">Logout</button>
+				</div>
+			</nav>
+
+			<div class="content">
+				<h2 class="section-title">Warden Dashboard</h2>
+				<div class="stats" aria-label="Complaint summary">
+					<div class="stat"><span class="stat-label">Total Complaints</span><strong class="stat-value" id="total-count">0</strong></div>
+					<div class="stat"><span class="stat-label">Pending</span><strong class="stat-value" id="pending-count">0</strong></div>
+					<div class="stat"><span class="stat-label">Resolved</span><strong class="stat-value" id="resolved-count">0</strong></div>
+				</div>
+
+				<div class="complaint-heading">
+					<h2>Complaints</h2>
+					<div class="filters">
+						<input id="search-input" type="search" placeholder="Search complaints" aria-label="Search complaints">
+						<select id="status-filter" aria-label="Filter by status">
+							<option value="All">Status: All</option>
+							<option value="Pending">Pending</option>
+							<option value="In Progress">In Progress</option>
+							<option value="Resolved">Resolved</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="table-wrap">
+					<table>
+						<thead><tr><th>ID</th><th>Title</th><th>Student</th><th>Priority</th><th>Status</th></tr></thead>
+						<tbody id="complaint-list"><tr><td class="empty" colspan="5">Loading complaints...</td></tr></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		const state = { complaints: [] };
+		const statusOptions = ['Pending', 'In Progress', 'Resolved'];
+
+		async function request(url, options = {}) {
+			const response = await fetch(url, { credentials: 'include', ...options });
+			const data = await response.json().catch(() => ({}));
+			if (!response.ok) throw new Error(data.error || 'Request failed');
+			return data;
+		}
+
+		function render() {
+			const search = document.querySelector('#search-input').value.toLowerCase().trim();
+			const status = document.querySelector('#status-filter').value;
+			const filtered = state.complaints.filter((complaint) => {
+				const matchesSearch = [complaint.complaint_id, complaint.title, complaint.user_id].some((value) => String(value).toLowerCase().includes(search));
+				return matchesSearch && (status === 'All' || complaint.status === status);
+			});
+			document.querySelector('#total-count').textContent = state.complaints.length;
+			document.querySelector('#pending-count').textContent = state.complaints.filter((item) => item.status === 'Pending').length;
+			document.querySelector('#resolved-count').textContent = state.complaints.filter((item) => item.status === 'Resolved').length;
+			const list = document.querySelector('#complaint-list');
+			if (!filtered.length) { list.innerHTML = '<tr><td class="empty" colspan="5">No complaints found.</td></tr>'; return; }
+			list.innerHTML = filtered.map((complaint) => `<tr>
+				<td>#${complaint.complaint_id}</td><td>${escapeHtml(complaint.title)}</td><td><a class="student-link" href="complaint-details.html?id=${encodeURIComponent(complaint.complaint_id)}" target="_blank" rel="noopener">${escapeHtml(complaint.student_name || `Student #${complaint.user_id}`)}</a></td>
+				<td>${escapeHtml(complaint.priority)}</td><td><select class="status-select" data-id="${complaint.complaint_id}" aria-label="Update status for ${escapeHtml(complaint.title)}">${statusOptions.map((option) => `<option ${option === complaint.status ? 'selected' : ''}>${option}</option>`).join('')}</select></td>
+			</tr>`).join('');
+		}
+
+		function escapeHtml(value) { return String(value ?? '').replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character])); }
+
+		async function loadDashboard() {
+			try {
+				const [me, complaints] = await Promise.all([request('/api/auth/me'), request('/api/warden/complaints')]);
+				document.querySelector('#warden-name').textContent = me.user.name;
+				state.complaints = complaints.complaints;
+				render();
+			} catch (error) {
+				document.querySelector('#complaint-list').innerHTML = `<tr><td class="error" colspan="5">${escapeHtml(error.message)}. Please log in again.</td></tr>`;
+			}
+		}
+
+		document.querySelector('#search-input').addEventListener('input', render);
+		document.querySelector('#status-filter').addEventListener('change', render);
+		document.querySelector('#complaint-list').addEventListener('change', async (event) => {
+			if (!event.target.matches('.status-select')) return;
+			const complaintId = event.target.dataset.id;
+			try {
+				await request(`/api/warden/complaints/${complaintId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: event.target.value }) });
+				const complaint = state.complaints.find((item) => item.complaint_id === complaintId);
+				if (complaint) complaint.status = event.target.value;
+				render();
+			} catch (error) { alert(error.message); render(); }
+		});
+		document.querySelector('#logout-button').addEventListener('click', async () => { await request('/api/auth/logout', { method: 'POST' }); window.location.href = 'staffLogin.html'; });
+		loadDashboard();
+	</script>
+</body>
+</html>

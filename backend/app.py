@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -13,7 +13,15 @@ db = SQLAlchemy()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(
+        __name__,
+        static_folder="../frontend",
+        static_url_path=""
+    )
+
+    @app.route("/")
+    def frontend_home():
+        return send_from_directory(app.static_folder, "loginPage/login.html")
 
     app.config["SECRET_KEY"] = os.getenv(
         "SECRET_KEY",

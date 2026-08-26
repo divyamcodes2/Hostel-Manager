@@ -51,7 +51,10 @@ def get_complaints():
         complaint_list.append({
             "complaint_id": complaint.complaint_id,
             "user_id": complaint.user_id,
+            "student_name": complaint.user.name,
             "room_id": complaint.room_id,
+            "room_number": complaint.room.room_number,
+            "hostel_block": complaint.room.hostel_block,
             "category": complaint.category,
             "title": complaint.title,
             "description": complaint.description,
@@ -68,6 +71,49 @@ def get_complaints():
 
     return jsonify({
         "complaints": complaint_list
+    }), 200
+
+
+@warden_bp.route(
+    "/complaints/<string:complaint_id>",
+    methods=["GET"]
+)
+def get_complaint_details(complaint_id):
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user = User.query.get(user_id)
+    if not user or not user.active:
+        session.clear()
+        return jsonify({"error": "Not authenticated"}), 401
+
+    if user.role != "warden":
+        return jsonify({"error": "Only wardens can view complaints"}), 403
+
+    complaint = Complaint.query.filter_by(
+        complaint_id=complaint_id
+    ).first()
+    if not complaint:
+        return jsonify({"error": "Complaint not found"}), 404
+
+    return jsonify({
+        "complaint": {
+            "complaint_id": complaint.complaint_id,
+            "student_name": complaint.user.name,
+            "student_email": complaint.user.email,
+            "room_number": complaint.room.room_number,
+            "hostel_block": complaint.room.hostel_block,
+            "category": complaint.category,
+            "title": complaint.title,
+            "description": complaint.description,
+            "priority": complaint.priority,
+            "status": complaint.status,
+            "created_at": complaint.created_at.isoformat(),
+            "updated_at": complaint.updated_at.isoformat(),
+            "resolved_at": complaint.resolved_at.isoformat() if complaint.resolved_at else None
+        }
     }), 200
 
 
