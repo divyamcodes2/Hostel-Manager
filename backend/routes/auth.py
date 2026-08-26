@@ -44,13 +44,24 @@ def login():
     session["user_id"] = user.id
     session["role"] = user.role
 
+    room_data = None
+
+    if user.room:
+        room_data = {
+            "id": user.room.id,
+            "hostel_block": user.room.hostel_block,
+            "room_number": user.room.room_number
+        }
+
     return jsonify({
         "message": "Login successful",
         "user": {
             "id": user.id,
             "name": user.name,
             "email": user.email,
-            "role": user.role
+            "role": user.role,
+            "room_id": user.room_id,
+            "room": room_data
         }
     }), 200
 
@@ -73,12 +84,23 @@ def me():
             "error": "Not authenticated"
         }), 401
 
+    room_data = None
+
+    if user.room:
+        room_data = {
+            "id": user.room.id,
+            "hostel_block": user.room.hostel_block,
+            "room_number": user.room.room_number
+        }
+
     return jsonify({
         "user": {
             "id": user.id,
             "name": user.name,
             "email": user.email,
-            "role": user.role
+            "role": user.role,
+            "room_id": user.room_id,
+            "room": room_data
         }
     }), 200
 

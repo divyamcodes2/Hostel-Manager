@@ -29,7 +29,11 @@ def create_app():
 
     db.init_app(app)
 
-    CORS(app)
+    CORS(
+        app,
+        supports_credentials=True,
+        origins=["http://127.0.0.1:5500"]
+    )
 
     from backend.routes.auth import auth_bp
     from backend.routes.complaints import complaints_bp
@@ -40,7 +44,7 @@ def create_app():
     app.register_blueprint(complaints_bp)
     app.register_blueprint(warden_bp)
     app.register_blueprint(admin_bp)
- 
+
     with app.app_context():
         from backend.models.user import User
         from backend.models.room import Room

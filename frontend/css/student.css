@@ -529,6 +529,8 @@ body {
     margin-bottom: 8px;
 }
 
+.dashboard-card input,
+.dashboard-card select,
 .dashboard-card textarea {
     width: 100%;
     resize: vertical;
@@ -540,6 +542,23 @@ body {
     font: inherit;
     outline: none;
     margin-bottom: 14px;
+}
+
+.dashboard-card input,
+.dashboard-card select {
+    height: 46px;
+    resize: none;
+}
+
+.dashboard-card textarea {
+    min-height: 120px;
+}
+
+.dashboard-card input:focus,
+.dashboard-card select:focus,
+.dashboard-card textarea:focus {
+    border-color: var(--dashboard-teal);
+    box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.14);
 }
 
 .dashboard-card textarea:focus {
@@ -589,8 +608,15 @@ body {
 }
 
 @keyframes dashboard-enter {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 700px) {

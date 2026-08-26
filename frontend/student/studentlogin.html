@@ -1,106 +1,1278 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Hostel Manager - Student Login</title>
+
+	<title>Hostel Manager - Student Portal</title>
+
 	<link rel="stylesheet" href="../css/student.css">
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+	<link
+		href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+		rel="stylesheet">
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="student-page">
+
 	<main class="student-shell">
+
+		<!-- ========================= -->
+		<!-- STUDENT LOGIN -->
+		<!-- ========================= -->
+
 		<section class="student-login" id="student-login">
+
 			<div class="login-header">
-				<i class="fa-solid fa-user-graduate logo-icon"></i>
-				<p class="eyebrow">Hostel Manager</p>
-				<h1>Student Login</h1>
-				<p>Sign in to manage your hostel account.</p>
+
+				<i class="fa-solid fa-user-graduate logo-icon" aria-hidden="true"></i>
+
+				<p class="eyebrow">
+					Hostel Manager
+				</p>
+
+				<h1>
+					Student Login
+				</h1>
+
+				<p>
+					Sign in to manage your hostel account.
+				</p>
+
 			</div>
+
 
 			<form class="login-form" id="student-login-form">
+
 				<div class="input-group">
-					<label for="student-email">Email address</label>
+
+					<label for="student-email">
+						Email address
+					</label>
+
 					<div class="input-field">
+
 						<i class="fa-solid fa-envelope icon" aria-hidden="true"></i>
+
 						<input type="email" id="student-email" placeholder="you@hostel.com" required>
+
 					</div>
+
 				</div>
+
+
 				<div class="input-group">
-					<label for="student-password">Password</label>
+
+					<label for="student-password">
+						Password
+					</label>
+
 					<div class="input-field">
+
 						<i class="fa-solid fa-lock icon" aria-hidden="true"></i>
+
 						<input type="password" id="student-password" placeholder="Enter your password" required>
+
 					</div>
+
 				</div>
+
+
 				<div class="form-options">
-					<label class="remember-me"><input type="checkbox"> Remember me</label>
-					<a href="#" class="forgot-pass">Forgot password?</a>
+
+					<label class="remember-me">
+
+						<input type="checkbox" id="remember-me">
+
+						Remember me
+
+					</label>
+
+
+					<a href="#" class="forgot-pass" onclick="return false;">
+						Forgot password?
+					</a>
+
 				</div>
-				<button type="submit" class="btn-login">Login to dashboard</button>
+
+
+				<button type="submit" class="btn-login" id="student-login-button">
+					Login to dashboard
+				</button>
+
 			</form>
-			<div class="login-footer"><a href="../loginPage/login.html">Back to portal selection</a></div>
+
+
+			<div class="login-footer">
+
+				<a href="../loginPage/login.html">
+					Back to portal selection
+				</a>
+
+			</div>
+
 		</section>
+
+
+		<!-- ========================= -->
+		<!-- STUDENT DASHBOARD -->
+		<!-- ========================= -->
 
 		<section class="student-dashboard" id="student-dashboard" hidden>
+
 			<header class="dashboard-header">
+
 				<div>
-					<p class="eyebrow">Student dashboard</p>
-					<h1>Good morning, Alex.</h1>
+
+					<p class="eyebrow">
+						Student dashboard
+					</p>
+
+					<h1 id="student-greeting">
+						Good morning.
+					</h1>
+
 				</div>
-				<button class="logout-button" type="button" id="student-logout">Log out</button>
+
+
+				<button class="logout-button" type="button" id="student-logout">
+					Log out
+				</button>
+
 			</header>
-			<div class="dashboard-layout">
-				<aside class="profile-panel">
-					<div class="avatar" aria-hidden="true">AS</div>
-					<p class="eyebrow">Your profile</p>
-					<h2>Alex Sharma</h2>
-					<dl class="profile-details">
-						<div><dt>Room number</dt><dd>B-204</dd></div>
-						<div><dt>Student ID</dt><dd>STU2026101</dd></div>
-					</dl>
-				</aside>
-				<div class="dashboard-main">
-					<section class="dashboard-card complaint-card">
-						<div class="card-heading">
-							<div><p class="eyebrow">Need help?</p><h2>Enter your complaint</h2></div>
-							<i class="fa-regular fa-message card-icon" aria-hidden="true"></i>
-						</div>
-						<form id="complaint-form">
-							<label for="complaint">Describe the issue</label>
-							<textarea id="complaint" rows="5" placeholder="Tell the warden what needs attention..." required></textarea>
-							<button class="btn-login" type="submit">Submit complaint</button>
-						</form>
-					</section>
-					<section class="dashboard-card status-card">
-						<div class="card-heading">
-							<div><p class="eyebrow">Stay informed</p><h2>Check complaint status</h2></div>
-							<i class="fa-solid fa-list-check card-icon" aria-hidden="true"></i>
-						</div>
-						<div class="status-row"><span>Water tap repair</span><strong class="status-badge pending">Pending</strong></div>
-						<div class="status-row"><span>Room light replacement</span><strong class="status-badge resolved">Resolved</strong></div>
-					</section>
+
+
+			<!-- ========================= -->
+			<!-- COMPLAINT SUCCESS CARD -->
+			<!-- ========================= -->
+
+			<section id="complaint-success-card" class="dashboard-card" hidden style="
+                margin-bottom: 24px;
+                border-left: 5px solid #0f9d8a;
+                background: #f1fffb;
+            ">
+
+				<div style="
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 16px;
+                ">
+
+					<div style="
+                        width: 42px;
+                        height: 42px;
+                        min-width: 42px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: #0f9d8a;
+                        color: white;
+                        font-size: 18px;
+                    ">
+						<i class="fa-solid fa-check" aria-hidden="true"></i>
+					</div>
+
+
+					<div style="flex: 1;">
+
+						<p class="eyebrow" style="margin-bottom: 4px;">
+							Success
+						</p>
+
+						<h2 style="
+                            margin-top: 0;
+                            margin-bottom: 8px;
+                        ">
+							Complaint submitted successfully
+						</h2>
+
+
+						<p style="
+                            margin: 0 0 12px 0;
+                        ">
+							Your complaint has been recorded and sent to the warden.
+						</p>
+
+
+						<p style="
+                            margin: 0 0 5px 0;
+                            font-size: 13px;
+                            font-weight: 600;
+                            opacity: 0.75;
+                        ">
+							Latest complaint ID
+						</p>
+
+
+						<span id="complaint-success-id" style="
+                            display: inline-block;
+                            padding: 9px 14px;
+                            border-radius: 8px;
+                            background: white;
+                            border: 1px solid #c8e8df;
+                            font-family: monospace;
+                            font-size: 15px;
+                            font-weight: 700;
+                            letter-spacing: 0.5px;
+                        ">
+							-
+						</span>
+
+					</div>
+
 				</div>
+
+			</section>
+
+
+			<div class="dashboard-layout">
+
+				<!-- ========================= -->
+				<!-- PROFILE -->
+				<!-- ========================= -->
+
+				<aside class="profile-panel">
+
+					<div class="avatar" id="student-avatar" aria-hidden="true">
+						ST
+					</div>
+
+
+					<p class="eyebrow">
+						Your profile
+					</p>
+
+
+					<h2 id="student-name">
+						Student
+					</h2>
+
+
+					<dl class="profile-details">
+
+						<div>
+
+							<dt>
+								Student name
+							</dt>
+
+							<dd id="student-name-detail">
+								-
+							</dd>
+
+						</div>
+
+
+						<div>
+
+							<dt>
+								Room number
+							</dt>
+
+							<dd id="student-room">
+								-
+							</dd>
+
+						</div>
+
+
+						<div>
+
+							<dt>
+								Student ID
+							</dt>
+
+							<dd id="student-id">
+								-
+							</dd>
+
+						</div>
+
+
+						<div>
+
+							<dt>
+								Email
+							</dt>
+
+							<dd id="student-email-detail">
+								-
+							</dd>
+
+						</div>
+
+					</dl>
+
+				</aside>
+
+
+				<!-- ========================= -->
+				<!-- MAIN DASHBOARD -->
+				<!-- ========================= -->
+
+				<div class="dashboard-main">
+
+					<!-- ========================= -->
+					<!-- COMPLAINT FORM -->
+					<!-- ========================= -->
+
+					<section class="dashboard-card complaint-card">
+
+						<div class="card-heading">
+
+							<div>
+
+								<p class="eyebrow">
+									Need help?
+								</p>
+
+								<h2>
+									Enter your complaint
+								</h2>
+
+							</div>
+
+							<i class="fa-regular fa-message card-icon" aria-hidden="true"></i>
+
+						</div>
+
+
+						<div id="complaint-form">
+
+							<label for="complaint-category">
+								Category
+							</label>
+
+
+							<select id="complaint-category" required>
+
+								<option value="">
+									Select category
+								</option>
+
+								<option value="Room">
+									Room
+								</option>
+
+								<option value="Water">
+									Water
+								</option>
+
+								<option value="Electricity">
+									Electricity
+								</option>
+
+								<option value="Food">
+									Food
+								</option>
+
+								<option value="Cleanliness">
+									Cleanliness
+								</option>
+
+								<option value="Other">
+									Other
+								</option>
+
+							</select>
+
+
+							<label for="complaint-title">
+								Title
+							</label>
+
+
+							<input type="text" id="complaint-title" placeholder="Short description of the problem"
+								maxlength="150" required>
+
+
+							<label for="complaint">
+								Describe the issue
+							</label>
+
+
+							<textarea id="complaint" rows="5" placeholder="Tell the warden what needs attention..."
+								required></textarea>
+
+
+							<button class="btn-login" type="button" id="submit-complaint-button">
+								Submit complaint
+							</button>
+
+						</div>
+
+					</section>
+
+
+					<!-- ========================= -->
+					<!-- COMPLAINT STATUS -->
+					<!-- ========================= -->
+
+					<section class="dashboard-card status-card">
+
+						<div class="card-heading">
+
+							<div>
+
+								<p class="eyebrow">
+									Stay informed
+								</p>
+
+								<h2>
+									Check complaint status
+								</h2>
+
+							</div>
+
+							<i class="fa-solid fa-list-check card-icon" aria-hidden="true"></i>
+
+						</div>
+
+
+						<div id="complaints-container">
+
+							<p>
+								No complaints submitted yet.
+							</p>
+
+						</div>
+
+					</section>
+
+				</div>
+
 			</div>
+
 		</section>
+
 	</main>
+
+
+	<script src="../js/api.js"></script>
+
+
 	<script>
-		const loginForm = document.getElementById('student-login-form');
-		const loginPanel = document.getElementById('student-login');
-		const dashboard = document.getElementById('student-dashboard');
-		const logoutButton = document.getElementById('student-logout');
 
-		loginForm.addEventListener('submit', (event) => {
-			event.preventDefault();
+		// ==========================================
+		// ELEMENT REFERENCES
+		// ==========================================
+
+		const loginForm =
+			document.getElementById(
+				"student-login-form"
+			);
+
+		const loginPanel =
+			document.getElementById(
+				"student-login"
+			);
+
+		const dashboard =
+			document.getElementById(
+				"student-dashboard"
+			);
+
+		const logoutButton =
+			document.getElementById(
+				"student-logout"
+			);
+
+		const loginButton =
+			document.getElementById(
+				"student-login-button"
+			);
+
+		const submitComplaintButton =
+			document.getElementById(
+				"submit-complaint-button"
+			);
+
+		const complaintSuccessCard =
+			document.getElementById(
+				"complaint-success-card"
+			);
+
+		const complaintSuccessId =
+			document.getElementById(
+				"complaint-success-id"
+			);
+
+
+		// ==========================================
+		// CREATE INITIALS
+		// ==========================================
+
+		function createInitials(name) {
+
+			if (!name) {
+				return "ST";
+			}
+
+			const words =
+				name
+					.trim()
+					.split(/\s+/);
+
+
+			if (words.length === 1) {
+
+				return words[0]
+					.substring(0, 2)
+					.toUpperCase();
+
+			}
+
+
+			return (
+				words[0][0] +
+				words[words.length - 1][0]
+			).toUpperCase();
+
+		}
+
+
+		// ==========================================
+		// SHOW DASHBOARD
+		// ==========================================
+
+		function showDashboard() {
+
 			loginPanel.hidden = true;
-			dashboard.hidden = false;
-		});
 
-		logoutButton.addEventListener('click', () => {
+			dashboard.hidden = false;
+
+		}
+
+
+		// ==========================================
+		// SHOW LOGIN
+		// ==========================================
+
+		function showLogin() {
+
 			dashboard.hidden = true;
+
 			loginPanel.hidden = false;
-			loginForm.reset();
-		});
+
+		}
+
+
+		// ==========================================
+		// SHOW SUCCESS CARD
+		// ==========================================
+
+		function showComplaintSuccess(complaintId) {
+
+			/*
+			 * Every new complaint passes a new
+			 * complaint ID into this function.
+			 *
+			 * Therefore the displayed ID is always
+			 * the most recently created complaint.
+			 */
+
+			complaintSuccessId.textContent =
+				complaintId;
+
+
+			complaintSuccessCard.hidden =
+				false;
+
+		}
+
+
+		// ==========================================
+		// HIDE SUCCESS CARD
+		// ==========================================
+
+		function hideComplaintSuccess() {
+
+			complaintSuccessCard.hidden =
+				true;
+
+			complaintSuccessId.textContent =
+				"-";
+
+		}
+
+
+		// ==========================================
+		// LOGIN
+		// ==========================================
+
+		loginForm.addEventListener(
+			"submit",
+			async function (event) {
+
+				event.preventDefault();
+
+				event.stopPropagation();
+
+
+				const email =
+					document
+						.getElementById(
+							"student-email"
+						)
+						.value
+						.trim();
+
+
+				const password =
+					document
+						.getElementById(
+							"student-password"
+						)
+						.value;
+
+
+				if (!email || !password) {
+
+					alert(
+						"Please enter your email and password."
+					);
+
+					return;
+
+				}
+
+
+				loginButton.disabled = true;
+
+				loginButton.textContent =
+					"Logging in...";
+
+
+				try {
+
+					const data =
+						await login(
+							email,
+							password
+						);
+
+
+					if (
+						!data.user ||
+						data.user.role !== "student"
+					) {
+
+						throw new Error(
+							"This account is not a student account."
+						);
+
+					}
+
+
+					showDashboard();
+
+
+					await loadStudentDashboard();
+
+
+				}
+				catch (error) {
+
+					console.error(
+						"Login error:",
+						error
+					);
+
+					alert(
+						error.message
+					);
+
+				}
+				finally {
+
+					loginButton.disabled = false;
+
+					loginButton.textContent =
+						"Login to dashboard";
+
+				}
+
+			}
+		);
+
+
+		// ==========================================
+		// LOAD STUDENT DASHBOARD
+		// ==========================================
+
+		async function loadStudentDashboard() {
+
+			try {
+
+				const data =
+					await getCurrentUser();
+
+
+				if (
+					!data ||
+					!data.user
+				) {
+
+					throw new Error(
+						"Student session could not be loaded."
+					);
+
+				}
+
+
+				const user =
+					data.user;
+
+
+				document.getElementById(
+					"student-name"
+				).textContent =
+					user.name;
+
+
+				document.getElementById(
+					"student-name-detail"
+				).textContent =
+					user.name;
+
+
+				document.getElementById(
+					"student-greeting"
+				).textContent =
+					`Good morning, ${user.name}.`;
+
+
+				document.getElementById(
+					"student-id"
+				).textContent =
+					user.id;
+
+
+				document.getElementById(
+					"student-email-detail"
+				).textContent =
+					user.email;
+
+
+				document.getElementById(
+					"student-avatar"
+				).textContent =
+					createInitials(
+						user.name
+					);
+
+
+				const roomElement =
+					document.getElementById(
+						"student-room"
+					);
+
+
+				if (
+					user.room &&
+					user.room.room_number
+				) {
+
+					roomElement.textContent =
+						`${user.room.hostel_block}-${user.room.room_number}`;
+
+				}
+				else {
+
+					roomElement.textContent =
+						"Not assigned";
+
+				}
+
+
+				await loadComplaints();
+
+			}
+			catch (error) {
+
+				console.error(
+					"Dashboard loading error:",
+					error
+				);
+
+
+				document.getElementById(
+					"complaints-container"
+				).innerHTML = `
+                <p>
+                    Unable to load complaint history.
+                </p>
+            `;
+
+			}
+
+		}
+
+
+		// ==========================================
+		// LOAD COMPLAINTS
+		// ==========================================
+
+		async function loadComplaints() {
+
+			const container =
+				document.getElementById(
+					"complaints-container"
+				);
+
+
+			container.innerHTML = `
+            <p>
+                Loading complaints...
+            </p>
+        `;
+
+
+			try {
+
+				const data =
+					await getMyComplaints();
+
+
+				container.innerHTML = "";
+
+
+				if (
+					!data.complaints ||
+					data.complaints.length === 0
+				) {
+
+					const message =
+						document.createElement(
+							"p"
+						);
+
+
+					message.textContent =
+						"No complaints submitted yet.";
+
+
+					container.appendChild(
+						message
+					);
+
+
+					return;
+
+				}
+
+
+				data.complaints.forEach(
+					function (complaint) {
+
+						const row =
+							document.createElement(
+								"div"
+							);
+
+
+						row.className =
+							"status-row";
+
+
+						const title =
+							document.createElement(
+								"span"
+							);
+
+
+						title.textContent =
+							complaint.title;
+
+
+						const status =
+							document.createElement(
+								"strong"
+							);
+
+
+						let statusClass =
+							"pending";
+
+
+						if (
+							complaint.status ===
+							"In Progress"
+						) {
+
+							statusClass =
+								"in-progress";
+
+						}
+						else if (
+							complaint.status ===
+							"Resolved"
+						) {
+
+							statusClass =
+								"resolved";
+
+						}
+						else if (
+							complaint.status ===
+							"Confirmed"
+						) {
+
+							statusClass =
+								"resolved";
+
+						}
+
+
+						status.className =
+							`status-badge ${statusClass}`;
+
+
+						status.textContent =
+							complaint.status;
+
+
+						row.appendChild(
+							title
+						);
+
+
+						row.appendChild(
+							status
+						);
+
+
+						container.appendChild(
+							row
+						);
+
+					}
+				);
+
+
+			}
+			catch (error) {
+
+				console.error(
+					"Complaint history error:",
+					error
+				);
+
+
+				container.innerHTML = `
+                <p>
+                    Unable to load complaint history.
+                </p>
+            `;
+
+			}
+
+		}
+
+
+		// ==========================================
+		// SUBMIT COMPLAINT
+		// ==========================================
+
+		submitComplaintButton.addEventListener(
+			"click",
+			async function () {
+
+				const category =
+					document
+						.getElementById(
+							"complaint-category"
+						)
+						.value
+						.trim();
+
+
+				const title =
+					document
+						.getElementById(
+							"complaint-title"
+						)
+						.value
+						.trim();
+
+
+				const description =
+					document
+						.getElementById(
+							"complaint"
+						)
+						.value
+						.trim();
+
+
+				if (
+					!category ||
+					!title ||
+					!description
+				) {
+
+					alert(
+						"Please fill in category, title and description."
+					);
+
+					return;
+
+				}
+
+
+				submitComplaintButton.disabled =
+					true;
+
+
+				submitComplaintButton.textContent =
+					"Submitting...";
+
+
+				try {
+
+					console.log(
+						"Submitting complaint..."
+					);
+
+
+					const data =
+						await createComplaint(
+							category,
+							title,
+							description
+						);
+
+
+					console.log(
+						"Complaint created successfully:",
+						data
+					);
+
+
+					/*
+					 * Get the NEW complaint ID returned
+					 * by the backend.
+					 */
+
+					const newComplaintId =
+						data.complaint.complaint_id;
+
+
+					/*
+					 * Update the success card with
+					 * the NEW complaint ID.
+					 *
+					 * This replaces the previous ID.
+					 */
+
+					showComplaintSuccess(
+						newComplaintId
+					);
+
+
+					/*
+					 * Clear the form.
+					 */
+
+					document.getElementById(
+						"complaint-category"
+					).value = "";
+
+
+					document.getElementById(
+						"complaint-title"
+					).value = "";
+
+
+					document.getElementById(
+						"complaint"
+					).value = "";
+
+
+					/*
+					 * Refresh the complaint list.
+					 */
+
+					await loadComplaints();
+
+
+					/*
+					 * Stay on dashboard.
+					 */
+
+					showDashboard();
+
+
+				}
+				catch (error) {
+
+					console.error(
+						"Complaint submission error:",
+						error
+					);
+
+
+					alert(
+						error.message
+					);
+
+				}
+				finally {
+
+					submitComplaintButton.disabled =
+						false;
+
+
+					submitComplaintButton.textContent =
+						"Submit complaint";
+
+				}
+
+			}
+		);
+
+
+		// ==========================================
+		// LOGOUT
+		// ==========================================
+
+		logoutButton.addEventListener(
+			"click",
+			async function () {
+
+				try {
+
+					await logout();
+
+				}
+				catch (error) {
+
+					console.error(
+						"Logout error:",
+						error
+					);
+
+				}
+
+
+				hideComplaintSuccess();
+
+
+				showLogin();
+
+
+				loginForm.reset();
+
+
+				document.getElementById(
+					"student-name"
+				).textContent =
+					"Student";
+
+
+				document.getElementById(
+					"student-name-detail"
+				).textContent =
+					"-";
+
+
+				document.getElementById(
+					"student-room"
+				).textContent =
+					"-";
+
+
+				document.getElementById(
+					"student-id"
+				).textContent =
+					"-";
+
+
+				document.getElementById(
+					"student-email-detail"
+				).textContent =
+					"-";
+
+
+				document.getElementById(
+					"student-avatar"
+				).textContent =
+					"ST";
+
+
+				document.getElementById(
+					"student-greeting"
+				).textContent =
+					"Good morning.";
+
+
+				document.getElementById(
+					"complaints-container"
+				).innerHTML = `
+                <p>
+                    No complaints submitted yet.
+                </p>
+            `;
+
+			}
+		);
+
+
+		// ==========================================
+		// RESTORE SESSION
+		// ==========================================
+
+		async function restoreSession() {
+
+			try {
+
+				const data =
+					await getCurrentUser();
+
+
+				if (
+					data &&
+					data.user &&
+					data.user.role === "student"
+				) {
+
+					showDashboard();
+
+					await loadStudentDashboard();
+
+				}
+				else {
+
+					showLogin();
+
+				}
+
+			}
+			catch (error) {
+
+				console.log(
+					"No active student session."
+				);
+
+				showLogin();
+
+			}
+
+		}
+
+
+		// ==========================================
+		// START
+		// ==========================================
+
+		restoreSession();
+
 	</script>
+
 </body>
+
 </html>
