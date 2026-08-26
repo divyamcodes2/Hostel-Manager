@@ -36,6 +36,7 @@ def seed_database():
             role="admin",
             active=True
         )
+
         admin.set_password("Admin@123")
 
         student = User(
@@ -45,27 +46,29 @@ def seed_database():
             room_id=room_101.id,
             active=True
         )
-    student.set_password("student@123")
 
-    warden = User(
-        name="Demo Warden",
-        email="warden@example.com",
-        role="warden",
-        active=True
-    ) 
-    warden.set_password("Warden@123")
+        student.set_password("student@123")
 
-    db.session.add(admin)
-    db.session.add(student)
-    db.session.add(warden)
+        warden = User(
+            name="Demo Warden",
+            email="warden@example.com",
+            role="warden",
+            active=True
+        )
 
-    db.session.commit()
+        warden.set_password("Warden@123")
 
-    print("Database seeded successfully.")
-    print()
-    print("Admin:   admin@example.com / Admin@123")
-    print("Student: student@example.com / shouvikchut@123")
-    print("Warden:  warden@example.com / Warden@123")
+        db.session.add(admin)
+        db.session.add(student)
+        db.session.add(warden)
+
+        db.session.commit()
+
+        print("Database seeded successfully.")
+        print()
+        print("Admin:   admin@example.com / Admin@123")
+        print("Student: student@example.com / student@123")
+        print("Warden:  warden@example.com / Warden@123")
 
 
 if __name__ == "__main__":
